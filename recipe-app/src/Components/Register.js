@@ -1,5 +1,5 @@
 import React from 'react';
-import { axiosWithAuth } from './utils/axiosWithAuth';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 class Register extends React.Component {
   changeHandler = (e) => {};
