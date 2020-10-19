@@ -4,10 +4,28 @@ import styled from 'styled-components'
 
 export default function Header() {
 
+    const Header = styled.header`
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 85%;
+    margin: 0 auto;
+    nav {
+
+    }
+    nav a{
+        padding: 5%;
+        text-decoration: none;
+        color: black;
+        border: 1px solid black;
+    }
+    `
+
 const location = useLocation()
 
     return (
-        <header>
+        <Header>
             <h1>Secret Recipe</h1>
             <nav>
                 <Link to='/'>Home</Link>
@@ -20,6 +38,6 @@ const location = useLocation()
                 ? null 
                 :  <Link to='/register'>Register</Link>}
             </nav>
-        </header>
+        </Header>
     )
 }
