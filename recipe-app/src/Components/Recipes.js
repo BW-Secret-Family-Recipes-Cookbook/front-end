@@ -1,1 +1,1 @@
-import { RecipesContext } from '../contexts/RecipesContext';
+import { FeedContext } from '../contexts/FeedContext';
