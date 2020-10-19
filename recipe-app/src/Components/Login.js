@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+import styled from 'styled-components'
+import { FeedContext } from '../contexts/FeedContext';
 
-import {} from '../contexts/FeedContext';
+const StyledForm = styled.form`
+display: flex;
+flex-flow: column nowrap;
+`
 
 const initialLoginValues = {
   username: '',
   password: '',
 };
 
-const { push } = useHistory();
-
 const Login = () => {
   const [credentials, setCredentials] = useState(initialLoginValues);
+  const { push } = useHistory();
 
   const changeHandler = (e) => {
     e.persist();
@@ -28,20 +32,20 @@ const Login = () => {
       .post('/login', credentials)
       .then((res) => {
         window.localStorage.setItem('token', res.data.payload);
-        history.push('/recipes/all');
+        push('/recipes/all');
       })
       .catch((err) => console.log('Login Error:', err));
   };
 
   return (
     <div className='login-form'>
-      <form onSubmit={onSubmit}>
+      <StyledForm onSubmit={onSubmit}>
         <label>Username:
         <input
           type='text'
           name='username'
-          value=''
-          //^^ state sensitive
+          placeholder='username'
+          value={credentials.username}
           onChange={changeHandler}
         />
         </label>
@@ -49,13 +53,17 @@ const Login = () => {
         <input
           type='text'
           name='password'
-          value=''
-          //^^ state sensitive
+          placeholder='password'
+          value={credentials.password}
           onChange={changeHandler}
         />
         </label>
-        <button>Submit</button>
-      </form>
+        <div className='submit btn'>
+        <button>Login</button>
+        </div>
+        
+      </StyledForm>
+
     </div>
   );
 };
