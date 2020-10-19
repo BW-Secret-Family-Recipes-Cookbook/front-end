@@ -36,6 +36,7 @@ const Login = () => {
   return (
     <div className='login-form'>
       <form onSubmit={onSubmit}>
+        <label>Username:
         <input
           type='text'
           name='username'
@@ -43,6 +44,8 @@ const Login = () => {
           //^^ state sensitive
           onChange={changeHandler}
         />
+        </label>
+        <label>Password:
         <input
           type='text'
           name='password'
@@ -50,6 +53,8 @@ const Login = () => {
           //^^ state sensitive
           onChange={changeHandler}
         />
+        </label>
+        <button>Submit</button>
       </form>
     </div>
   );
