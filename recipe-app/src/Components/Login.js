@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
-import {} from '../contexts/FeedContext';
+import { FeedContext } from '../contexts/FeedContext';
 
 const initialLoginValues = {
   username: '',
   password: '',
 };
 
-const { push } = useHistory();
-
 const Login = () => {
   const [credentials, setCredentials] = useState(initialLoginValues);
+  const { push } = useHistory();
 
   const changeHandler = (e) => {
     e.persist();
@@ -28,7 +27,7 @@ const Login = () => {
       .post('/login', credentials)
       .then((res) => {
         window.localStorage.setItem('token', res.data.payload);
-        history.push('/recipes/all');
+        push('/recipes/all');
       })
       .catch((err) => console.log('Login Error:', err));
   };
@@ -39,17 +38,18 @@ const Login = () => {
         <input
           type='text'
           name='username'
-          value=''
-          //^^ state sensitive
+          placeholder='username'
+          value={credentials.username}
           onChange={changeHandler}
         />
         <input
           type='text'
           name='password'
-          value=''
-          //^^ state sensitive
+          placeholder='password'
+          value={credentials.password}
           onChange={changeHandler}
         />
+        <button>Login</button>
       </form>
     </div>
   );
