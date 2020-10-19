@@ -1,8 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, withRouter } from 'react-router-dom';
 
 const AppWithRouter = withRouter(App);
@@ -10,8 +10,8 @@ const AppWithRouter = withRouter(App);
 ReactDOM.render(
     <Router>
       <AppWithRouter />
-    </Router>
-  document.getElementById("root")
+    </Router>,
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
