@@ -2,13 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
-import Login from './Components/Login';
-import Register from './Components/Register';
+import Login from './components/Login';
+import Register from './components/Register';
+import Header from './components/Header';
 
 function App() {
+
   return (
     <div className='App'>
-      <h1>Recipe-App</h1>
+      <Header/>
       <Switch>
         {/* <Route path='/register' component={Register} /> */}
         {/* <Route path='/login' component={Login} /> */}
