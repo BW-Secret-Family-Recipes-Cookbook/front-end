@@ -1,39 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
-class Register extends React.Component {
-  changeHandler = (e) => {};
+const initialRegisterValues = {
+  email: '',
+  username: '',
+  password: '',
+};
 
-  render() {
-    return (
-      <div className='register-form'>
-        <form>
-          <input
-            type='text'
-            name='email'
-            value=''
-            //^^ state sensitive
-            // onChange={changeHandler}
-          />
-          <input
-            type='text'
-            name='username'
-            value=''
-            //^^ state sensitive
-            // onChange={changeHandler}
-          />
-          <input
-            type='text'
-            name='password'
-            value=''
-            //^^ state sensitive
-            // onChange={changeHandler}
-          />
-        </form>
-      </div>
-    );
-  }
-}
+const Register = () => {
+  const [credentials, setCredentials] = useState(initialRegisterValues);
+
+  const changeHandler = (e) => {
+    e.persist();
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.taget.value,
+    });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    axiosWithAuth()
+      .post('/register', credentials)
+      .then((res) => {
+        setCredentials(initialRegisterValues);
+      });
+  };
+
+  return (
+    <div className='register-form'>
+      <form onSubmit={onSubmit}>
+        <input
+          type='text'
+          name='email'
+          placeholder='email'
+          value={credentials.email}
+          onChange={changeHandler}
+        />
+        <input
+          type='text'
+          name='username'
+          placeholder='username'
+          value={credentials.username}
+          onChange={changeHandler}
+        />
+        <input
+          type='text'
+          name='password'
+          placeholder='password'
+          value={credentials.password}
+          onChange={changeHandler}
+        />
+        <button>Sign Up!</button>
+      </form>
+    </div>
+  );
+};
 
 export default Register;
 

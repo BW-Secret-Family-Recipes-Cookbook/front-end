@@ -29,7 +29,7 @@ const Login = () => {
         window.localStorage.setItem('token', res.data.payload);
         push('/recipes/all');
       })
-      .catch((err) => console.log('Login Error:', err));
+      .catch((err) => console.log('Login Post Error:', err));
   };
 
   return (
