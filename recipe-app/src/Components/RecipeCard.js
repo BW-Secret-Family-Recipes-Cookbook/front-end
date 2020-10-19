@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { RecipeCardContext } from '../contexts/RecipeCardContext';
+import { FeedContext } from '../contexts/FeedContext';
 
 const RecipeCard = () => {
   changeHandler = (e) => {};
