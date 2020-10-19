@@ -58,7 +58,7 @@ const Login = () => {
           onChange={changeHandler}
         />
         </label>
-        <div className='submit btn'>
+        <div className='login btn'>
         <button>Login</button>
         </div>
         
