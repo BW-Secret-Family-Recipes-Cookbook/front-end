@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
-
+import styled from 'styled-components'
 import { FeedContext } from '../contexts/FeedContext';
+
+const StyledForm = styled.form`
+display: flex;
+flex-flow: column nowrap;
+`
 
 const initialLoginValues = {
   username: '',
@@ -34,7 +39,8 @@ const Login = () => {
 
   return (
     <div className='login-form'>
-      <form onSubmit={onSubmit}>
+      <StyledForm onSubmit={onSubmit}>
+        <label>Username:
         <input
           type='text'
           name='username'
@@ -42,6 +48,8 @@ const Login = () => {
           value={credentials.username}
           onChange={changeHandler}
         />
+        </label>
+        <label>Password:
         <input
           type='text'
           name='password'
@@ -49,8 +57,13 @@ const Login = () => {
           value={credentials.password}
           onChange={changeHandler}
         />
+        </label>
+        <div className='submit btn'>
         <button>Login</button>
-      </form>
+        </div>
+        
+      </StyledForm>
+
     </div>
   );
 };
