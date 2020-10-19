@@ -4,16 +4,22 @@ import styled from 'styled-components'
 
 export default function Header() {
 
-    let location = useLocation()
+const location = useLocation()
 
     return (
         <header>
             <h1>Secret Recipe</h1>
-            <Router>
+            <nav>
                 <Link to='/'>Home</Link>
-                {location === '/login'  && <Link to='/login' >Login</Link>}
-                {location === '/register' && <Link to='/register'>Register</Link>}
-            </Router>
+                {/* <Link to='/login' >Login</Link>
+                <Link to='/register'>Register</Link> */}
+                {location.pathname === '/login' 
+                ? null 
+                : <Link to='/login' >Login</Link>}
+                {location.pathname === '/register' 
+                ? null 
+                :  <Link to='/register'>Register</Link>}
+            </nav>
         </header>
     )
 }
