@@ -1,13 +1,21 @@
 import React from 'react';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+import styled from 'styled-components'
+
+const StyledForm = styled.form`
+display: flex;
+flex-flow: column nowrap;
+`
 
 class Register extends React.Component {
   changeHandler = (e) => {};
 
+
   render() {
     return (
       <div className='register-form'>
-        <form>
+        <StyledForm>
+          <label>Email:
           <input
             type='text'
             name='email'
@@ -15,6 +23,8 @@ class Register extends React.Component {
             //^^ state sensitive
             // onChange={changeHandler}
           />
+          </label>
+          <label>Username:
           <input
             type='text'
             name='username'
@@ -22,6 +32,8 @@ class Register extends React.Component {
             //^^ state sensitive
             // onChange={changeHandler}
           />
+          </label>
+          <label>Password:
           <input
             type='text'
             name='password'
@@ -29,7 +41,11 @@ class Register extends React.Component {
             //^^ state sensitive
             // onChange={changeHandler}
           />
-        </form>
+          </label>
+          <div className='register btn'>
+            <button>Submit</button>
+          </div>
+        </StyledForm>
       </div>
     );
   }
