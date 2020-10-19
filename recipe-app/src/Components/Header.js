@@ -32,12 +32,7 @@ const location = useLocation()
                 <Link to='/login' >Login</Link>
                 <Link to='/register'>Register</Link>
 
-                {/* {location.pathname === '/login' 
-                ? <Link disabled={true} to='/login' >Login</Link> 
-                : <Link to='/login' >Login</Link>}
-                {location.pathname === '/register' 
-                ? <Link disabled={true} to='/register'>Register</Link> 
-                :  <Link to='/register'>Register</Link>} */}
+
             </nav>
         </SRHeader>
     )
