@@ -29,8 +29,7 @@ const location = useLocation()
             <h1>Secret Recipe</h1>
             <nav>
                 <Link to='/'>Home</Link>
-                {/* <Link to='/login' >Login</Link>
-                <Link to='/register'>Register</Link> */}
+
                 {location.pathname === '/login' 
                 ? null 
                 : <Link to='/login' >Login</Link>}
