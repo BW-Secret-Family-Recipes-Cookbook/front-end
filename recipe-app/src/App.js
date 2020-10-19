@@ -2,13 +2,13 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './Components/PrivateRoute';
 import { FeedContext } from './contexts/FeedContext';
 import { axiosWithAuth } from './utils/axiosWithAuth';
 
-import Login from './components/Header';
-import Register from './components/Register';
-import Header from './components/Header';
+import Login from './Components/Header';
+import Register from './Components/Register';
+import Header from './Components/Header';
 
 function App() {
   return (
