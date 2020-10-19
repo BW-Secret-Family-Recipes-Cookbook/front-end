@@ -6,7 +6,7 @@ import PrivateRoute from './Components/PrivateRoute';
 import { FeedContext } from './contexts/FeedContext';
 import { axiosWithAuth } from './utils/axiosWithAuth';
 
-import Login from './Components/Header';
+import Login from './Components/Login';
 import Register from './Components/Register';
 import Header from './Components/Header';
 
@@ -17,8 +17,8 @@ function App() {
         <FeedContext.Provider>
           <Header />
           <Switch>
-            <Route path='/register' component={Register} />
-            <Route path='/login' component={Login} />
+            <Route exact path='/register' component={Register} />
+            <Route exact path='/login' component={Login} />
             {/* <PrivateRoute path='/recipes/all' component={} /> */}
           </Switch>
         </FeedContext.Provider>
