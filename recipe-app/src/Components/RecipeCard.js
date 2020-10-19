@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-class RecipeCard extends React.Component{
-    changeHandler = (e) => {};
+import { RecipeCardContext } from '../contexts/RecipeCardContext';
 
+const RecipeCard = () => {
+  changeHandler = (e) => {};
 
-    render(){
-        return(
-            <div className='recipe-card-form'>
-
-            </div>
-        )
-    }
-}
+  return <div className='recipe-card-form'></div>;
+};
 
 export default RecipeCard;
