@@ -9,7 +9,7 @@ import Header from './components/Header';
 function App() {
   return (
     <div className='App'>
-      <h1>Recipe-App</h1>
+      <Header/>
       <Switch>
         {/* <Route path='/register' component={Register} /> */}
         {/* <Route path='/login' component={Login} /> */}

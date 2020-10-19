@@ -8,10 +8,11 @@ export default function Header() {
 
     return (
         <header>
+            <h1>Secret Recipe</h1>
             <Router>
+                <Link to='/'>Home</Link>
                 {location === '/login'  && <Link to='/login' >Login</Link>}
                 {location === '/register' && <Link to='/register'>Register</Link>}
-                {location === '/'}
             </Router>
         </header>
     )
