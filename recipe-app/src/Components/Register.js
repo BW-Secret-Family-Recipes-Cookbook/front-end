@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 import styled from 'styled-components';
 import registerSchema from '../validation/registerSchema'
+import * as yup from 'yup'
 
 // Style for Register
 const StyledForm = styled.form`
@@ -45,21 +46,52 @@ const StyledForm = styled.form`
   }
 `;
 
+const StyledErrors = styled.div`
+color: red;
+font-weight: bolder;
+`
+
+// Initial Values
 const initialRegisterValues = {
   primaryemail: '',
   username: '',
   password: '',
 };
 
+const initialCredFormErrors = {
+  primaryemail: '',
+  username: '',
+  password: '',
+}
+
 const initialDisabled = true;
 
 const Register = () => {
+  // States
   const [credentials, setCredentials] = useState(initialRegisterValues);
   const [disabled, setDisabled] = useState(initialDisabled)
+  const [credFormErrors, setCredFormErrors] = useState(initialCredFormErrors)
   const { push } = useHistory();
 
   const changeHandler = (e) => {
     e.persist();
+
+    // Validate form values and set errors
+    yup.reach(registerSchema, e.target.name)
+    .validate(e.target.value)
+    .then(() => {
+      setCredFormErrors({
+        ...credFormErrors,
+        [e.target.name]:'',
+      })
+    })
+    .catch(err => {
+      setCredFormErrors({
+        ...credFormErrors,
+        [e.target.name]:err.errors[0]
+      })
+    })
+
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value,
@@ -79,12 +111,13 @@ const Register = () => {
 
   useEffect(() => {
     registerSchema.isValid(credentials).then(valid => {
-      console.log(valid)
+      setDisabled(!valid)
     })
   },[credentials])
 
   return (
     <div className='register-form'>
+
       <StyledForm onSubmit={onSubmit}>
         <label>
           Email:
@@ -120,6 +153,11 @@ const Register = () => {
           <button disabled={disabled}>Submit</button>
         </div>
       </StyledForm>
+      <StyledErrors>
+        <p>{credFormErrors.primaryemail}</p>
+        <p>{credFormErrors.username}</p>
+        <p>{credFormErrors.password}</p>
+      </StyledErrors>
     </div>
   );
 };

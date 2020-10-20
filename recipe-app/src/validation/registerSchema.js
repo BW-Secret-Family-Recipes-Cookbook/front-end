@@ -3,6 +3,7 @@ import * as yup from 'yup'
 export default yup.object().shape({
     primaryemail: yup
     .string()
+    .email("Must be a valid email")
     .required("Please enter an email for registration"),
     username: yup
     .string()
