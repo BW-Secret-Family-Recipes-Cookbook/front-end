@@ -4,9 +4,45 @@ import Axios from 'axios';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 import styled from 'styled-components';
 
+
+// Style for Login
 const StyledForm = styled.form`
+  color: #787878;
   display: flex;
   flex-flow: column nowrap;
+  align-items: center;
+  width: 400px;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgb(200,200,200);
+  border-radius: 0.35rem;
+  padding: 3% 0;
+  margin-top: 5%;
+  label {
+    margin: 1% 0;
+    width: 70%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+  .btn button {
+    margin-top: 1rem;
+    border: solid 3px #efefef;
+    outline: none;
+    border-radius: 2rem;
+    :hover {
+      border: solid 3px #49bf9d;
+      background: #49bf9d;
+      color: rgb(250,250,250);
+      transition: background-color 0.2s ease-in-out,
+      color 0.2s ease-in-out,
+      border-color 0.2s ease-in-out;
+    }
+    :active {
+      border: solid 3px #3ea888;
+      background-color: #39997c;
+
+    }
+  }
 `;
 
 const initialLoginValues = {
