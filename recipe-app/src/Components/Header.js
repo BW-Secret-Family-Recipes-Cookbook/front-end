@@ -26,8 +26,6 @@ div {
 nav {
     display: flex;
     flex-flow: row nowrap;
-    width: 200px;
-
 }
 nav a{
     margin: 1%;
