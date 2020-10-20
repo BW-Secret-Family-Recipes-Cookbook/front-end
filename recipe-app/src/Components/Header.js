@@ -61,7 +61,7 @@ const location = useLocation()
                 ? <Link to='/' >Logout</Link> 
                 : <Link to='/login' >Login</Link>}
                 {location.pathname.includes('/recipe')
-                ? <Link to='/recipe/all' >All Recipes</Link> 
+                ? <Link to='/recipes/all' >All Recipes</Link> 
                 : <Link to='/register'>Register</Link>}
                 {/* {location.pathname.includes('/recipe')
                 ? <Link to='/recipe/all' >All Recipes</Link> 
