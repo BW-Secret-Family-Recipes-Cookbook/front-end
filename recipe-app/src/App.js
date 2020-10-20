@@ -21,10 +21,11 @@ const initialRecipeValues = {
 
 function App() {
   const [recipeValues, setRecipeValues] = useState(initialRecipeValues);
+  const [recipes, setRecipes] = useState([]);
 
   return (
     <div className='App'>
-      <RecipesContext.Provider value={{ recipeValues, setRecipeValues }}>
+      <RecipesContext.Provider value={{ recipes, setRecipes }}>
         <Router>
           <Header />
           <Switch>
