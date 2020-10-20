@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Loader from 'react-loader-spinner';
 
+import { RecipesContext } from '../contexts/RecipesContext';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 const RecipeCard = (props) => {
-  const [recipes, setRecipes] = useState([]);
+  const { recipes, setRecipes } = useContext(RecipesContext);
+  // const [recipes, setRecipes] = useState([]);
 
   const renderLoader = () => {
     return (

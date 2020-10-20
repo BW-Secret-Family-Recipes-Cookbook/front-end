@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { axiosWithAuth } from '../utils/axiosWithAuth';
+import { useHistory } from 'react-router-dom';
+import Axios from 'axios';
 import styled from 'styled-components';
 
-import { RegisterContext } from '../contexts/RegisterContext';
 
 // Style for Register
 const StyledForm = styled.form`
@@ -52,6 +52,7 @@ const initialRegisterValues = {
 
 const Register = () => {
   const [credentials, setCredentials] = useState(initialRegisterValues);
+  const { push } = useHistory();
 
   const changeHandler = (e) => {
     e.persist();
@@ -63,11 +64,13 @@ const Register = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    axiosWithAuth()
-      .post('/createnewuser', credentials)
-      .then((res) => {
-        setCredentials(initialRegisterValues);
-      });
+    Axios.post(
+      'http://samkester-secret-recipes.herokuapp.com/createnewuser',
+      credentials
+    ).then((res) => {
+      window.localStorage.setItem('token', res.data.access_token);
+      push('/recipes/all');
+    });
   };
 
   return (
