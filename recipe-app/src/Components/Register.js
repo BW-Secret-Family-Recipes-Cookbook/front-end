@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 import styled from 'styled-components';
+import registerSchema from '../validation/registerSchema'
 
 // Style for Register
 const StyledForm = styled.form`
@@ -38,6 +39,9 @@ const StyledForm = styled.form`
       border: solid 3px #3ea888;
       background-color: #39997c;
     }
+    :disabled {
+      pointer-events: none;
+    }
   }
 `;
 
@@ -47,8 +51,11 @@ const initialRegisterValues = {
   password: '',
 };
 
+const initialDisabled = true;
+
 const Register = () => {
   const [credentials, setCredentials] = useState(initialRegisterValues);
+  const [disabled, setDisabled] = useState(initialDisabled)
   const { push } = useHistory();
 
   const changeHandler = (e) => {
@@ -69,6 +76,12 @@ const Register = () => {
       push('/recipes/all');
     });
   };
+
+  useEffect(() => {
+    registerSchema.isValid(credentials).then(valid => {
+      console.log(valid)
+    })
+  },[credentials])
 
   return (
     <div className='register-form'>
@@ -104,7 +117,7 @@ const Register = () => {
           />
         </label>
         <div className='register btn'>
-          <button>Submit</button>
+          <button disabled={disabled}>Submit</button>
         </div>
       </StyledForm>
     </div>
