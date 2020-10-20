@@ -5,12 +5,13 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
 import styled from 'styled-components';
 import { LoginContext } from '../contexts/LoginContext';
 
+
+// Style for Login
 const StyledForm = styled.form`
   color: #787878;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  /* border: 1px solid red; */
   width: 400px;
   margin: 0 auto;
   box-shadow: 0 0 10px rgb(200,200,200);
@@ -18,7 +19,6 @@ const StyledForm = styled.form`
   padding: 3% 0;
   margin-top: 5%;
   label {
-    /* border: 1px solid green; */
     margin: 1% 0;
     width: 70%;
     display: flex;
