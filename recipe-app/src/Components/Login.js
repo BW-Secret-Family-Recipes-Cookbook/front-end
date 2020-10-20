@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 import styled from 'styled-components';
-import { LoginContext } from '../contexts/LoginContext';
 
 const StyledForm = styled.form`
   display: flex;
