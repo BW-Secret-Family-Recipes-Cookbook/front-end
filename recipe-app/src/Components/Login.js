@@ -4,7 +4,6 @@ import Axios from 'axios';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 import styled from 'styled-components';
 
-
 // Style for Login
 const StyledForm = styled.form`
   color: #787878;
@@ -13,7 +12,7 @@ const StyledForm = styled.form`
   align-items: center;
   width: 400px;
   margin: 0 auto;
-  box-shadow: 0 0 10px rgb(200,200,200);
+  box-shadow: 0 0 10px rgb(200, 200, 200);
   border-radius: 0.35rem;
   padding: 3% 0;
   margin-top: 5%;
@@ -32,15 +31,13 @@ const StyledForm = styled.form`
     :hover {
       border: solid 3px #49bf9d;
       background: #49bf9d;
-      color: rgb(250,250,250);
-      transition: background-color 0.2s ease-in-out,
-      color 0.2s ease-in-out,
-      border-color 0.2s ease-in-out;
+      color: rgb(250, 250, 250);
+      transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
+        border-color 0.2s ease-in-out;
     }
     :active {
       border: solid 3px #3ea888;
       background-color: #39997c;
-
     }
   }
 `;
@@ -65,7 +62,7 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     Axios.post(
-      'http://samkester-secret-recipes.herokuapp.com/login',
+      'https://samkester-secret-recipes.herokuapp.com/login',
       `grant_type=password&username=${credentials.username}&password=${credentials.password}`,
       {
         headers: {

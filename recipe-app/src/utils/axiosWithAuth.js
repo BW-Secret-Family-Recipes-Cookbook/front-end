@@ -6,6 +6,6 @@ export const axiosWithAuth = () => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    baseURL: 'http://samkester-secret-recipes.herokuapp.com',
+    baseURL: 'https://samkester-secret-recipes.herokuapp.com',
   });
 };
