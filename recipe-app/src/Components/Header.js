@@ -26,8 +26,6 @@ div {
 nav {
     display: flex;
     flex-flow: row nowrap;
-    width: 200px;
-
 }
 nav a{
     margin: 1%;
@@ -36,6 +34,7 @@ nav a{
     color: #787878;
     border: solid 3px #efefef;
     border-radius: 0.35rem;
+    white-space: nowrap;
     :hover {
         color: #49bf9d;
         border: solid 3px #49bf9d;
@@ -58,8 +57,15 @@ const location = useLocation()
             </div>
             <nav>
                 <a href='https://quizzical-heisenberg-4d47a4.netlify.app/'>Home</a>
-                <Link to='/login' >Login</Link>
-                <Link to='/register'>Register</Link>
+                {location.pathname.includes('/recipe')
+                ? <Link to='/' >Logout</Link> 
+                : <Link to='/login' >Login</Link>}
+                {location.pathname.includes('/recipe')
+                ? <Link to='/recipes/all' >All Recipes</Link> 
+                : <Link to='/register'>Register</Link>}
+                {/* {location.pathname.includes('/recipe')
+                ? <Link to='/recipe/all' >All Recipes</Link> 
+                : null} */}
 
 
             </nav>
