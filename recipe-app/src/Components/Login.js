@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
-import styled from 'styled-components'
-import { FeedContext } from '../contexts/FeedContext';
+import styled from 'styled-components';
+import { LoginContext } from '../contexts/LoginContext';
 
 const StyledForm = styled.form`
-display: flex;
-flex-flow: column nowrap;
-`
+  display: flex;
+  flex-flow: column nowrap;
+`;
 
 const initialLoginValues = {
   username: '',
@@ -40,30 +40,30 @@ const Login = () => {
   return (
     <div className='login-form'>
       <StyledForm onSubmit={onSubmit}>
-        <label>Username:
-        <input
-          type='text'
-          name='username'
-          placeholder='username'
-          value={credentials.username}
-          onChange={changeHandler}
-        />
+        <label>
+          Username:
+          <input
+            type='text'
+            name='username'
+            placeholder='username'
+            value={credentials.username}
+            onChange={changeHandler}
+          />
         </label>
-        <label>Password:
-        <input
-          type='text'
-          name='password'
-          placeholder='password'
-          value={credentials.password}
-          onChange={changeHandler}
-        />
+        <label>
+          Password:
+          <input
+            type='text'
+            name='password'
+            placeholder='password'
+            value={credentials.password}
+            onChange={changeHandler}
+          />
         </label>
         <div className='login btn'>
-        <button>Login</button>
+          <button>Login</button>
         </div>
-        
       </StyledForm>
-
     </div>
   );
 };
