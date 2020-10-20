@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
+import { ReactComponent as Logo } from '../assets/steak.svg'
 
 const SRHeader = styled.header`
 color: #787878;
@@ -10,10 +11,21 @@ justify-content: space-between;
 align-items: center;
 width: 85%;
 margin: 0 auto;
+/* border: 1px solid green; */
+svg {
+    width: 50px;
+    height: auto;
+    margin-right: 15px;
+    /* border: 1px solid purple; */
+}
+div {
+    display:flex;
+}
 nav {
     display: flex;
     flex-flow: row nowrap;
     width: 200px;
+    /* border: 1px solid blue; */
 }
 nav a{
     margin: 1%;
@@ -38,7 +50,10 @@ const location = useLocation()
 
     return (
         <SRHeader>
+            <div>
+            <Logo />
             <h1>Secret Family Recipe</h1>
+            </div>
             <nav>
                 <a href='https://quizzical-heisenberg-4d47a4.netlify.app/'>Home</a>
                 <Link to='/login' >Login</Link>
