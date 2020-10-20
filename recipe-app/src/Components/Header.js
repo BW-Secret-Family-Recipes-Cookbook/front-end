@@ -60,14 +60,14 @@ const location = useLocation()
             <nav>
                 <a href='https://quizzical-heisenberg-4d47a4.netlify.app/'>Home</a>
                 {location.pathname.includes('/recipe')
-                ? <Link to='/login' >Logout</Link> 
+                ? <Link to='/' >Logout</Link> 
                 : <Link to='/login' >Login</Link>}
                 {location.pathname.includes('/recipe')
-                ? null 
-                : <Link to='/register'>Register</Link>}
-                {location.pathname.includes('/recipe')
                 ? <Link to='/recipe/all' >All Recipes</Link> 
-                : null}
+                : <Link to='/register'>Register</Link>}
+                {/* {location.pathname.includes('/recipe')
+                ? <Link to='/recipe/all' >All Recipes</Link> 
+                : null} */}
 
 
             </nav>
