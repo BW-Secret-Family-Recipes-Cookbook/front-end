@@ -6,7 +6,6 @@ export const axiosWithAuth = () => {
     headers: {
       authorization: token,
     },
-    baseURL: '',
-    //need from sam ^^, oauth that we will need to ajust for.
+    baseURL: 'http://samkester-secret-recipes.herokuapp.com/',
   });
 };
