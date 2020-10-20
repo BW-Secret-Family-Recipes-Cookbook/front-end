@@ -6,7 +6,6 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 const RecipeCard = (props) => {
   const { recipes, setRecipes } = useContext(RecipesContext);
-  // const [recipes, setRecipes] = useState([]);
 
   const renderLoader = () => {
     return (
@@ -43,7 +42,8 @@ const RecipeCard = (props) => {
       </div>
       {props.isLoading
         ? renderLoader()
-        : recipes.map((recipe, idx) => (
+        : recipes &&
+          recipes.map((recipe, idx) => (
             <div key={idx} className='current-recipes'>
               <h3>{`Recipe Name: ${recipe.name}`}</h3>
               <h5>{`Recipe Source: ${recipe.source}`}</h5>
