@@ -2,10 +2,12 @@ import React, { useContext } from 'react';
 
 import { RecipesContext } from '../contexts/RecipesContext';
 
+import RecipeCard from '../Components/RecipeCard';
+
 const Recipes = () => {
   return (
     <div className='recipes'>
-      <h3>This will be the recipes component.</h3>
+      <RecipeCard />
     </div>
   );
 };

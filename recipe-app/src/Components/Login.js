@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Axios from 'axios';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 import styled from 'styled-components';
 import { LoginContext } from '../contexts/LoginContext';
@@ -28,10 +29,19 @@ const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    axiosWithAuth()
-      .post('/login', credentials)
+    Axios.post(
+      'http://samkester-secret-recipes.herokuapp.com/login',
+      `grant_type=password&username=${credentials.username}&password=${credentials.password}`,
+      {
+        headers: {
+          // btoa is converting our client id/client secret into base64
+          Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }
+    )
       .then((res) => {
-        window.localStorage.setItem('token', res.data.payload);
+        window.localStorage.setItem('token', res.data.access_token);
         push('/recipes/all');
       })
       .catch((err) => console.log('Login Post Error:', err));

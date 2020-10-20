@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
@@ -14,7 +14,17 @@ import Register from './Components/Register';
 import Recipes from './Components/Recipes';
 import Header from './Components/Header';
 
+const initialRecipeValues = {
+  name: '',
+  source: '',
+  instructions: '',
+  category: '',
+  ingredients: [],
+};
+
 function App() {
+  const [recipeValues, setRecipeValues] = useState(initialRecipeValues);
+
   return (
     <div className='App'>
       <LoginContext.Provider>

@@ -10,7 +10,7 @@ const StyledForm = styled.form`
 `;
 
 const initialRegisterValues = {
-  email: '',
+  primaryemail: '',
   username: '',
   password: '',
 };
@@ -22,14 +22,14 @@ const Register = () => {
     e.persist();
     setCredentials({
       ...credentials,
-      [e.target.name]: e.taget.value,
+      [e.target.name]: e.target.value,
     });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     axiosWithAuth()
-      .post('/register', credentials)
+      .post('/createnewuser', credentials)
       .then((res) => {
         setCredentials(initialRegisterValues);
       });
@@ -42,9 +42,9 @@ const Register = () => {
           Email:
           <input
             type='text'
-            name='email'
+            name='primaryemail'
             placeholder='email'
-            value={credentials.email}
+            value={credentials.primaryemail}
             onChange={changeHandler}
           />
         </label>
@@ -77,7 +77,3 @@ const Register = () => {
 };
 
 export default Register;
-
-// **Register**
-// [POST] - /register
-// -will need to include email, username & pw

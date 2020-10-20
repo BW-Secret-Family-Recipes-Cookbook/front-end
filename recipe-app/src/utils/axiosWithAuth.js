@@ -4,8 +4,8 @@ export const axiosWithAuth = () => {
   const token = window.localStorage.getItem('token');
   return axios.create({
     headers: {
-      authorization: token,
+      Authorization: `Bearer ${token}`,
     },
-    baseURL: 'http://samkester-secret-recipes.herokuapp.com/',
+    baseURL: 'http://samkester-secret-recipes.herokuapp.com',
   });
 };
