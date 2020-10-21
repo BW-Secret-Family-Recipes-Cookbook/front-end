@@ -20,9 +20,29 @@ const initialRecipeValues = {
   ingredients: [],
 };
 
+const dummyValues = [{
+  name: 'Re1',
+  source: 'Re1',
+  instructions: 'Re1',
+  category: 'Re1',
+  ingredients: ['rock', 'scissors', 'paper'],
+}, {
+  name: 'Re2',
+  source: 'Re2',
+  instructions: 'Re2',
+  category: 'Re2',
+  ingredients: ['rock', 'scissors', 'paper'],
+}, {
+  name: 'Re3',
+  source: 'Re3',
+  instructions: 'Re3',
+  category: 'Re3',
+  ingredients: ['rock', 'scissors', 'paper'],
+}]
+
 function App() {
   const [recipeValues, setRecipeValues] = useState(initialRecipeValues);
-  const [recipes, setRecipes] = useState([]);
+  const [recipes, setRecipes] = useState(dummyValues);
 
   return (
     <div className='App'>

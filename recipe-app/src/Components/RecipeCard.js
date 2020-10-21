@@ -27,8 +27,17 @@ const RecipeCard = (props) => {
     axiosWithAuth()
       .get('/recipes/all')
       .then((res) => {
-        setRecipes(...recipes, res.data);
-        console.log(res.data);
+        // debugger
+        // let newData = [{
+        //   name: 'Re4',
+        //   source: 'Re4',
+        //   instructions: 'Re4',
+        //   category: 'Re4',
+        //   ingredients: ['rock', 'scissors', 'paper'],
+        // }]
+        setRecipes([...recipes.concat(res.data)]);
+        // console.log(recipes)
+        // console.log(res.data);
       });
   };
 
@@ -49,9 +58,10 @@ const RecipeCard = (props) => {
               <h5>{`Recipe Source: ${recipe.source}`}</h5>
               <h5>{`Instructions: ${recipe.instructions}`}</h5>
               <h5>{`Category: ${recipe.category}`}</h5>
-              <h5>{`Ingredients: ${recipe.ingredients.map((ingredient) => {
+              <h5>{`Ingredients: ${recipe.ingredients.toString()}`}</h5>
+              {/* <h5>{`Ingredients: ${recipe.ingredients.map((ingredient) => {
                 return ingredient.ingredient.name;
-              })}`}</h5>
+              })}`}</h5> */}
             </div>
           ))}
     </div>
