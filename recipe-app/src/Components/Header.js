@@ -8,12 +8,12 @@ import { ReactComponent as Logo } from '../assets/steak.svg'
 const SRHeader = styled.header`
 color: #787878;
 display: flex;
-flex-flow: row nowrap;
+flex-flow: row wrap;
 justify-content: space-between;
 align-items: center;
 width: 85%;
 margin: 0 auto;
-
+box-shadow: 0 10px 10px -15px black;
 svg {
     width: 50px;
     height: auto;
@@ -24,6 +24,7 @@ div {
     display:flex;
 }
 nav {
+    width: 15.5rem;
     display: flex;
     flex-flow: row nowrap;
 }

@@ -20,6 +20,26 @@ const initialRecipeValues = {
   ingredients: [],
 };
 
+// const dummyValues = [{
+//   name: 'Rfsdfsafadas f sasdfsdafe1',
+//   source: 'Ressa ffasdf ds fs fsad1',
+//   instructions: 'Redsafsafs afas dsaf assdfsadfdsafsdf1',
+//   category: 'Redsfsafsdfs1',
+//   ingredients: ['rock', 'scissors', 'paper'],
+// }, {
+//   name: 'Re2',
+//   source: 'Redsafsdsafdsad fsfasfsafsdafsafsad2',
+//   instructions: 'Reas dfsa 2',
+//   category: 'Reasdf as2',
+//   ingredients: ['rock', 'scissors', 'paper', 'scissors', 'paper', 'scissors', 'paper', 'scissors', 'paper', 'scissors', 'paper', 'paper', 'scissors', 'paper', 'scissors', 'paper', 'scissors', 'paper', 'paper', 'scissors', 'paper', 'scissors', 'paper', 'scissors', 'paper'],
+// }, {
+//   name: 'Re3',
+//   source: 'Rsadfsafesa fdsasa fdsa dsa fsfsadfdsda fsafasfdsafsafd3',
+//   instructions: 'Rsafsafe3',
+//   category: 'Rsafsafase3',
+//   ingredients: ['rock', 'scissors', 'paper'],
+// }]
+
 function App() {
   const [recipeValues, setRecipeValues] = useState(initialRecipeValues);
   const [recipes, setRecipes] = useState([]);
