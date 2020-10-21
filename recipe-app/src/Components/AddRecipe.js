@@ -76,7 +76,9 @@ const AddRecipe = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const newArr = [];
-    newArr.push(recipeValues.ingredients);
+    recipeValues.ingredients.split(',').forEach(ingr => {
+      newArr.push(ingr);
+    })
     const newRecipe = {
       ...recipeValues,
       ingredients: newArr,
