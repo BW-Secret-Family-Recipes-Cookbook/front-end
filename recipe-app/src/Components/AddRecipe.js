@@ -4,6 +4,51 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 import { RecipesContext } from '../contexts/RecipesContext';
 import { RVContext } from '../contexts/RVcontext';
+import styled from 'styled-components'
+
+
+const SRAddCard = styled.form`
+display: flex;
+flex-direction: column;
+align-items: center;
+width : 400px;
+box-shadow: 0px 0px 2px;
+border-radius: 10px;
+margin: 10px;
+
+input{
+  display:flex;
+  width:70%;
+  padding:4px;
+  margin:4px;
+}
+
+button{
+  padding: 4px;
+  width:30%;
+  margin: 4px;
+  border: none;
+  border-radius: 4px
+}
+
+.submitBtn{
+  color: white;
+  background:#49bf9d;
+  margin-top: 25px;
+}
+
+.submitBtn:hover{
+  background:#50d4ae;
+}
+.cancelBtn{
+  margin-bottom: 10px;
+}
+.cancelBtn:hover{
+  background: #e3e3e3;
+}
+
+`
+
 
 const AddRecipe = (props) => {
   //States and variables
@@ -55,7 +100,8 @@ const AddRecipe = (props) => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+
+    <SRAddCard onSubmit={onSubmit}>
       <h2>Recipe Card</h2>
 
       <input
@@ -74,7 +120,7 @@ const AddRecipe = (props) => {
         placeholder='Enter Source'
       />
 
-      <input
+      <input 
         name='instructions'
         type='text'
         value={recipeValues.instructions}
@@ -91,7 +137,7 @@ const AddRecipe = (props) => {
       />
       {/* ^^^^^should change to selector??? */}
 
-      <input
+      <input 
         name='ingredients'
         type='text'
         value={recipeValues.ingredients}
@@ -105,7 +151,7 @@ const AddRecipe = (props) => {
       <button className='cancelBtn' onClick={onCancel}>
         Cancel
       </button>
-    </form>
+    </SRAddCard>
   );
 };
 
