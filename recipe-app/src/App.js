@@ -5,6 +5,7 @@ import './App.css';
 import PrivateRoute from './Components/PrivateRoute';
 
 import { RecipesContext } from './contexts/RecipesContext';
+import { RVContext } from './contexts/RVcontext';
 
 import Login from './Components/Login';
 import Register from './Components/Register';
@@ -26,20 +27,22 @@ function App() {
   return (
     <div className='App'>
       <RecipesContext.Provider value={{ recipes, setRecipes }}>
-        <Router>
-          <Header />
-          <Switch>
-            <Route exact path='/register'>
-              <Register />
-            </Route>
-            <Route exact path='/login'>
-              <Login />
-            </Route>
-            <PrivateRoute path='/recipes/all'>
-              <Recipes />
-            </PrivateRoute>
-          </Switch>
-        </Router>
+        <RVContext.Provider value={{ recipeValues, setRecipeValues }}>
+          <Router>
+            <Header />
+            <Switch>
+              <Route exact path='/register'>
+                <Register />
+              </Route>
+              <Route exact path='/login'>
+                <Login />
+              </Route>
+              <PrivateRoute path='/recipes/all'>
+                <Recipes />
+              </PrivateRoute>
+            </Switch>
+          </Router>
+        </RVContext.Provider>
       </RecipesContext.Provider>
     </div>
   );
