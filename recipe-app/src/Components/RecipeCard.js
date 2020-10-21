@@ -51,14 +51,6 @@ const RecipeCard = (props) => {
     axiosWithAuth()
       .get('/recipes/all')
       .then((res) => {
-        // debugger
-        // let newData = [{
-        //   name: 'Re4',
-        //   source: 'Re4',
-        //   instructions: 'Re4',
-        //   category: 'Re4',
-        //   ingredients: ['rock', 'scissors', 'paper'],
-        // }]
         setRecipes([...recipes.concat(res.data)]);
         // console.log(recipes)
         // console.log(res.data);
@@ -75,19 +67,21 @@ const RecipeCard = (props) => {
       <div>{/* <AddRecipe /> */}</div>
       {props.isLoading
         ? renderLoader()
-        : recipes &&
-          recipes.map((recipe, idx) => (
+        : recipes.map((recipe, idx) => (
             <StyledCard key={idx} className='current-recipes'>
               <h3>{`Recipe Name: ${recipe.name}`}</h3>
               <h5>{`Recipe Source: ${recipe.source}`}</h5>
               <h5>{`Instructions: ${recipe.instructions}`}</h5>
               <h5>{`Category: ${recipe.category}`}</h5>
               <h5>{`Ingredients: ${recipe.ingredients.join(', ')}`}</h5>
-              {/* <h5>{`Ingredients: ${recipe.ingredients.map((ingredient) => {
-                return ingredient.ingredient.name;
-              })}`}</h5> */}
             </StyledCard>
           ))}
+      {/* <div className='edit-button' onClick={editHandler}>
+        Edit Recipe
+      </div>
+      <div className='delete-button' onClick={deleteHandler}>
+        Delete Recipe
+      </div> */}
     </CardContainer>
   );
 };
