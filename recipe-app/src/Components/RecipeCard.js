@@ -22,6 +22,12 @@ max-width: 300px;
     border: solid 7px #49bf9d;
     transition: border-color 0.2s ease-in-out;
 }
+h3 {
+  font-size: 1.5rem;
+}
+h5 {
+  
+}
 `
 
 const RecipeCard = (props) => {
