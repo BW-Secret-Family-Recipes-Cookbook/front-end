@@ -36,7 +36,7 @@ const RecipeCard = (props) => {
   }, []);
 
   return (
-    <div>
+    <div className='user-recipes'>
       <div>
         <p>will put CardSetup here??</p>
       </div>
