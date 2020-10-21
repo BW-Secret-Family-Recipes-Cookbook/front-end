@@ -53,12 +53,12 @@ const RecipeCard = (props) => {
               })}`}</h5>
             </div>
           ))}
-      <div className='edit-button' onClick={editHandler}>
+      {/* <div className='edit-button' onClick={editHandler}>
         Edit Recipe
       </div>
       <div className='delete-button' onClick={deleteHandler}>
         Delete Recipe
-      </div>
+      </div> */}
     </div>
   );
 };
