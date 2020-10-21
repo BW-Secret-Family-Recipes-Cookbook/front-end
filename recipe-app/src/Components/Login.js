@@ -46,9 +46,15 @@ const initialLoginValues = {
   username: '',
   password: '',
 };
+const initialLoginErrors = {
+  username: '',
+  passwordk: '',
+  invalid: '',
+}
 
 const Login = () => {
   const [credentials, setCredentials] = useState(initialLoginValues);
+  const [loginErrors, setLoginErrors] = useState(initialLoginErrors)
   const { push } = useHistory();
 
   const changeHandler = (e) => {
@@ -76,7 +82,12 @@ const Login = () => {
         window.localStorage.setItem('token', res.data.access_token);
         push('/recipes/all');
       })
-      .catch((err) => console.log('Login Post Error:', err));
+      .catch((err) => {
+        debugger
+        // console.log(JSON.parse(err.request.response).error_description)
+        setLoginErrors({...loginErrors, invalid: JSON.parse(err.request.response).error_description})
+        console.log('Login Post Error:', err)
+      });
   };
 
   return (
