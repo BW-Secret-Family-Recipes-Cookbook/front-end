@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Loader from 'react-loader-spinner';
+import styled from 'styled-components'
 
 import { RecipesContext } from '../contexts/RecipesContext';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 // import AddRecipe from './AddRecipe';
+
+const StyledCard = styled.div`
+
+`
 
 const RecipeCard = (props) => {
   const { recipes, setRecipes } = useContext(RecipesContext);
