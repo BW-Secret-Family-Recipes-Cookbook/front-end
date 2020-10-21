@@ -53,6 +53,7 @@ const AddRecipe = (props) => {
     values,
     setValues,
     reset,
+    iniRecipeValues,
     // submitHandlers: { postIngredient, putIngredient },
   } = props;
 
@@ -92,6 +93,8 @@ const AddRecipe = (props) => {
       .catch((err) => {
         console.log('Post new recipes Error:', err);
       });
+
+      setRecipeValues(iniRecipeValues)
   };
 
   const isDisabled = () => {
