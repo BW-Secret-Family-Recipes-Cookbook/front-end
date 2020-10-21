@@ -6,9 +6,22 @@ import { RecipesContext } from '../contexts/RecipesContext';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 // import AddRecipe from './AddRecipe';
-
+const CardContainer = styled.div`
+display: flex;
+flex-flow: row wrap;
+justify-content: center;
+`
 const StyledCard = styled.div`
-
+color: #525252;
+border: solid 7px #efefef;
+margin: 2rem;
+padding: 2rem;
+border-radius: 1.3rem;
+max-width: 300px;
+  :hover {
+    border: solid 7px #49bf9d;
+    transition: border-color 0.2s ease-in-out;
+}
 `
 
 const RecipeCard = (props) => {
@@ -52,24 +65,24 @@ const RecipeCard = (props) => {
   }, []);
 
   return (
-    <div className='user-recipes'>
+    <CardContainer className='user-recipes'>
       <div>{/* <AddRecipe /> */}</div>
       {props.isLoading
         ? renderLoader()
         : recipes &&
           recipes.map((recipe, idx) => (
-            <div key={idx} className='current-recipes'>
+            <StyledCard key={idx} className='current-recipes'>
               <h3>{`Recipe Name: ${recipe.name}`}</h3>
               <h5>{`Recipe Source: ${recipe.source}`}</h5>
               <h5>{`Instructions: ${recipe.instructions}`}</h5>
               <h5>{`Category: ${recipe.category}`}</h5>
-              <h5>{`Ingredients: ${recipe.ingredients.toString()}`}</h5>
+              <h5>{`Ingredients: ${recipe.ingredients.join(', ')}`}</h5>
               {/* <h5>{`Ingredients: ${recipe.ingredients.map((ingredient) => {
                 return ingredient.ingredient.name;
               })}`}</h5> */}
-            </div>
+            </StyledCard>
           ))}
-    </div>
+    </CardContainer>
   );
 };
 
