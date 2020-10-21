@@ -42,18 +42,23 @@ const RecipeCard = (props) => {
       <div>{/* <AddRecipe /> */}</div>
       {props.isLoading
         ? renderLoader()
-        : recipes &&
-          recipes.map((recipe, idx) => (
+        : recipes.map((recipe, idx) => (
             <div key={idx} className='current-recipes'>
               <h3>{`Recipe Name: ${recipe.name}`}</h3>
               <h5>{`Recipe Source: ${recipe.source}`}</h5>
               <h5>{`Instructions: ${recipe.instructions}`}</h5>
               <h5>{`Category: ${recipe.category}`}</h5>
               <h5>{`Ingredients: ${recipe.ingredients.map((ingredient) => {
-                return ingredient.ingredient.name;
+                return ingredient.name;
               })}`}</h5>
             </div>
           ))}
+      <div className='edit-button' onClick={editHandler}>
+        Edit Recipe
+      </div>
+      <div className='delete-button' onClick={deleteHandler}>
+        Delete Recipe
+      </div>
     </div>
   );
 };

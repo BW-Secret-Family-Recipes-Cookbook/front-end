@@ -40,10 +40,6 @@ function App() {
               <PrivateRoute path='/recipes/all'>
                 <Recipes />
               </PrivateRoute>
-              <PrivateRoute>
-                {/* will add new private route for delete?  */}
-                {/* will add new private route for delete?  */}
-              </PrivateRoute>
             </Switch>
           </Router>
         </RVContext.Provider>
