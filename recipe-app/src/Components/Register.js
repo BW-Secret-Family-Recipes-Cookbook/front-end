@@ -69,8 +69,8 @@ const initialDisabled = true;
 const Register = () => {
   // States
   const [credentials, setCredentials] = useState(initialRegisterValues);
-  const [disabled, setDisabled] = useState(initialDisabled)
-  const [credFormErrors, setCredFormErrors] = useState(initialCredFormErrors)
+  const [disabled, setDisabled] = useState(initialDisabled);
+  const [credFormErrors, setCredFormErrors] = useState(initialCredFormErrors);
   const { push } = useHistory();
 
   const changeHandler = (e) => {

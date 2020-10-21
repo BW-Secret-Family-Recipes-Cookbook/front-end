@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 import styled from 'styled-components';
+import loginSchema from '../validation/loginSchema'
 
 // Style for Login
 const StyledForm = styled.form`
@@ -39,16 +40,32 @@ const StyledForm = styled.form`
       border: solid 3px #3ea888;
       background-color: #39997c;
     }
+    :disabled {
+      pointer-events: none;
+    }
   }
 `;
 
+const StyledErrors = styled.div`
+color: red;
+font-weight: bolder;
+`
 const initialLoginValues = {
   username: '',
   password: '',
 };
+const initialLoginErrors = {
+  username: '',
+  passwordk: '',
+  invalid: '',
+}
+
+const initialDisabled = true;
 
 const Login = () => {
   const [credentials, setCredentials] = useState(initialLoginValues);
+  const [disabled, setDisabled] = useState(initialDisabled);
+  const [loginErrors, setLoginErrors] = useState(initialLoginErrors);
   const { push } = useHistory();
 
   const changeHandler = (e) => {
@@ -66,7 +83,6 @@ const Login = () => {
       `grant_type=password&username=${credentials.username}&password=${credentials.password}`,
       {
         headers: {
-          // btoa is converting our client id/client secret into base64
           Authorization: `Basic ${btoa('lambda-client:lambda-secret')}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
@@ -74,13 +90,29 @@ const Login = () => {
     )
       .then((res) => {
         window.localStorage.setItem('token', res.data.access_token);
+        setLoginErrors({...loginErrors, invalid:''});
         push('/recipes/all');
       })
-      .catch((err) => console.log('Login Post Error:', err));
+      .catch((err) => {
+        setLoginErrors({
+          ...loginErrors, 
+          invalid: JSON.parse(err.request.response).error_description});
+        setCredentials({...credentials, password: ''})
+        console.log('Login Post Error:', err);
+      });
   };
+
+  useEffect(() => {
+    loginSchema.isValid(credentials).then(valid =>{
+      setDisabled(!valid)
+    })
+  },[credentials])
 
   return (
     <div className='login-form'>
+      <StyledErrors>
+        <p>{loginErrors.invalid}</p>
+      </StyledErrors>
       <StyledForm onSubmit={onSubmit}>
         <label>
           Username:
@@ -103,7 +135,7 @@ const Login = () => {
           />
         </label>
         <div className='login btn'>
-          <button>Login</button>
+          <button disabled={disabled}>Login</button>
         </div>
       </StyledForm>
     </div>
