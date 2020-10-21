@@ -4,6 +4,8 @@ import Loader from 'react-loader-spinner';
 import { RecipesContext } from '../contexts/RecipesContext';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
+// import AddRecipe from './AddRecipe';
+
 const RecipeCard = (props) => {
   const { recipes, setRecipes } = useContext(RecipesContext);
 
@@ -37,9 +39,7 @@ const RecipeCard = (props) => {
 
   return (
     <div className='user-recipes'>
-      <div>
-        <p>will put CardSetup here??</p>
-      </div>
+      <div>{/* <AddRecipe /> */}</div>
       {props.isLoading
         ? renderLoader()
         : recipes &&

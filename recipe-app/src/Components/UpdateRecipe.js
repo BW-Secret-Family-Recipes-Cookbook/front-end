@@ -26,7 +26,7 @@ const UpdateRecipe = () => {
 
   useEffect(() => {
     axiosWithAuth()
-      .get(`/recipes${id}`)
+      .get(`/recipes/${id}`)
       .then((res) => {
         setRecipe(res.data);
       })
@@ -65,7 +65,7 @@ const UpdateRecipe = () => {
         type='text'
         value={recipe.source}
         onChange={changeHandler}
-        placeholder='Enter Recipe Name'
+        placeholder='Enter Source'
       />
 
       <input
@@ -81,7 +81,7 @@ const UpdateRecipe = () => {
         type='text'
         value={recipe.category}
         onChange={changeHandler}
-        placeholder='Enter Instructions'
+        placeholder='Enter Category'
       />
       {/* ^^^^^should change to selector??? */}
 
