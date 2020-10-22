@@ -117,7 +117,7 @@ const UpdateRecipe = (props) => {
   // }, [recipeid]);
 
   useEffect(() => {
-    console.log({ recipe });
+    // console.log({ recipe });
   }, [recipe]);
 
   const handleSubmit = (e) => {
@@ -141,7 +141,7 @@ const UpdateRecipe = (props) => {
         setRecipes(
           recipes.map((recipe) => {
             if (updatedRecipe.recipeid === recipe.recipeid) {
-              console.log('found it');
+              // console.log('found it');
               return updatedRecipe;
             } else {
               return recipe;
@@ -149,7 +149,7 @@ const UpdateRecipe = (props) => {
           })
         );
         props.editHandler();
-        console.log(recipes);
+        // console.log(recipes);
       })
       .catch((err) => {
         console.log('Put Error:', err);

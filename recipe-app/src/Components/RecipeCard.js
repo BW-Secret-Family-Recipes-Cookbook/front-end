@@ -13,7 +13,6 @@ const CardContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-
 `;
 const StyledCard = styled.div`
   color: #525252;
@@ -34,13 +33,13 @@ const StyledCard = styled.div`
     margin: 0;
   }
   h5 {
-    margin: .8rem 0;
+    margin: 0.8rem 0;
   }
   .btn {
     color: #525252;
-    font-size: .9rem;
-    padding: .3rem .4rem;
-    margin: .25rem 0;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.4rem;
+    margin: 0.25rem 0;
     border: none;
     border-radius: 4px;
     background: rgb(239, 239, 239);
@@ -92,7 +91,7 @@ const RecipeCard = (props) => {
 
   useEffect(() => {
     getRecipes();
-    console.log('test');
+    // console.log('test');
   }, []);
 
   const deleteHandler = (recipe) => {
@@ -115,8 +114,9 @@ const RecipeCard = (props) => {
       });
   };
 
-  const editHandler = () => {
-    setEditable(!editable);
+  const editHandler = (e) => {
+    console.log(e.target);
+    setEditable(e.target.name);
   };
 
   return (
@@ -126,7 +126,7 @@ const RecipeCard = (props) => {
         ? renderLoader()
         : recipes.map((recipe, idx) => (
             <StyledCard key={idx} className='current-recipes'>
-              {!editable ? (
+              {recipe.recipeid != editable ? (
                 <>
                   <h3>{`Recipe Name: ${recipe.name}`}</h3>
                   <h5>{`Recipe Source: ${recipe.source}`}</h5>
@@ -148,8 +148,12 @@ const RecipeCard = (props) => {
               >
                 Delete Recipe
               </button>
-              <button className='edit-button btn' onClick={editHandler}>
-                {editable ? 'Cancel' : 'Edit Recipe'}
+              <button
+                name={recipe.recipeid != editable ? recipe.recipeid : ''}
+                className='edit-button btn'
+                onClick={editHandler}
+              >
+                {recipe.recipeid == editable ? 'Cancel' : 'Edit Recipe'}
               </button>
             </StyledCard>
           ))}
