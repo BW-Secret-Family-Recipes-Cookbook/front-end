@@ -1,48 +1,45 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import * as yup from 'yup';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 import updateSchema from '../validation/updateRecSchema';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
-
 import { RecipesContext } from '../contexts/RecipesContext';
 
 const StyledForm = styled.form`
-display: flex;
-flex-flow: column nowrap;
-label {
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-}
-input {
-  margin-left: 2rem;
-}
-button {
-  margin: 1rem 0;
-  color: white;
-  background: #49bf9d;
-  margin-top: 25px;
-  border: none;
-  border-radius: .25rem;
-  padding: .4rem;
-  :hover {
-    background: #50d4ae;
-    transition: background-color 0.2s ease-in-out;
+  flex-flow: column nowrap;
+  label {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
   }
-}
-
+  input {
+    margin-left: 2rem;
+  }
+  button {
+    margin: 1rem 0;
+    color: white;
+    background: #49bf9d;
+    margin-top: 25px;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.4rem;
+    :hover {
+      background: #50d4ae;
+      transition: background-color 0.2s ease-in-out;
+    }
+  }
 `;
 
 const StyledErrors = styled.p`
-color: red;
-font-weight: bold;
-margin: 0;
-font-size: .9rem;
+  color: red;
+  font-weight: bold;
+  margin: 0;
+  font-size: 0.9rem;
 `;
-
 
 const initialRecipe = {
   name: '',
@@ -70,21 +67,19 @@ const UpdateRecipe = (props) => {
 
   const checkForTrailing = (string) => {
     let stringArray = [];
-    let newString = ''
-    if (typeof(string) === "object") {
-      newString = string.toString()
+    let newString = '';
+    if (typeof string === 'object') {
+      newString = string.toString();
+    } else {
+      newString = string;
     }
-    else {
-      newString = string
+    if (newString.charAt(newString.length - 1) === ',') {
+      stringArray = newString.replace(/,+$/, '').split(',');
+    } else {
+      stringArray = newString.split(',');
     }
-    if (newString.charAt(newString.length-1) === ',') {
-      stringArray = newString.replace(/,+$/,"").split(',')
-    }
-    else {
-      stringArray = newString.split(',')
-    }
-    return stringArray
-  }
+    return stringArray;
+  };
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -97,15 +92,12 @@ const UpdateRecipe = (props) => {
           [name]: '',
         });
       })
-
-    })
-    .catch( err => {
-      setErrorMessages({
-        ...errorMessages,
-        [name]: `- ${err.errors[0]}`,
-      })
-    })
-
+      .catch((err) => {
+        setErrorMessages({
+          ...errorMessages,
+          [name]: `- ${err.errors[0]}`,
+        });
+      });
 
     setRecipe({
       ...recipe,
