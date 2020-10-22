@@ -43,7 +43,7 @@ const UpdateRecipe = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newArr = [];
-    recipe.ingredients.split(',').forEach((ingr) => {
+    recipe.ingredients.replace(/,+$/,"").split(',').forEach((ingr) => {
       newArr.push(ingr);
     });
     const updatedRecipe = {
