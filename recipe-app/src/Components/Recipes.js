@@ -5,10 +5,10 @@ import React, { useContext } from 'react';
 import RecipeCard from '../Components/RecipeCard';
 import AddRecipe from '../Components/AddRecipe';
 
-const Recipes = ({initialRV}) => {
+const Recipes = (props) => {
   return (
     <div className='recipes'>
-      <AddRecipe iniRecipeValues={initialRV}/>
+      <AddRecipe />
       <RecipeCard />
     </div>
   );
