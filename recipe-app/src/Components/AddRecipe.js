@@ -1,10 +1,19 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
-
-import { RecipesContext } from '../contexts/RecipesContext';
-import { RVContext } from '../contexts/RVcontext';
 import styled from 'styled-components';
+
+import * as yup from 'yup'
+
+
+const schema = yup.object().shape({
+  name: yup.string().required('Recipe name is required.'),
+  source: yup.string().required('Source is required.'),
+  ingredients: yup.string().required('Ingredients are required.'),
+  category: yup.string().required('Category is required.'),
+  instructions: yup.string().required('Instructions are required.')
+})
+
 
 const SRAddCard = styled.form`
   display: flex;
@@ -69,9 +78,26 @@ const AddRecipe = (props) => {
     // submitHandlers: { postIngredient, putIngredient },
   } = props;
 
-  const { recipes, setRecipes } = useContext(RecipesContext);
-  const { recipeValues, setRecipeValues } = useContext(RVContext);
+  const [isDisabled, setIsDisabled] = useState(true)
+
+  useEffect(() =>{
+  schema.isValid(recipe).then(valid => setIsDisabled(!valid))
+  }, [recipe])
+
+  const setFormErrors = (name, value) =>{
+    yup.reach(schema, name).validate(value)
+      .then(()=>setErrors({...errors, [name]:''}))
+      .catch(err=>setErrors({...errors, [name]: err.errors[0]}))
+  }
+
   const [recipe, setRecipe] = useState({
+    name: '',
+    source: '',
+    instructions: '',
+    category: '',
+    ingredients: [],
+  });
+  const [errors, setErrors] = useState({
     name: '',
     source: '',
     instructions: '',
@@ -88,6 +114,7 @@ const AddRecipe = (props) => {
 
   const changeHandler = (evt) => {
     const { name, value } = evt.target;
+    setFormErrors(name, value)
     setRecipe({
       ...recipe,
       [name]: value,
@@ -124,15 +151,17 @@ const AddRecipe = (props) => {
       })
   };
 
-  const isDisabled = () => {
-    return !values.text.trim() || !values.recipes.trim();
-  };
-
   return (
     <SRAddCard onSubmit={onSubmit}>
       <div className='container'>
       <h2>Add New Recipe</h2>
-
+      <div className='errors'>
+        <div>{errors.name}</div>
+        <div>{errors.source}</div>
+        <div>{errors.instructions}</div>
+        <div>{errors.category}</div>
+        <div>{errors.ingredients}</div>
+      </div>
       <input
         name='name'
         type='text'
