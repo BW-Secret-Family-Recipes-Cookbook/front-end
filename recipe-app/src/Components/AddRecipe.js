@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+
+import { RecipesContext } from '../contexts/RecipesContext';
+
 import styled from 'styled-components';
 
 import * as yup from 'yup'
@@ -20,7 +22,6 @@ const SRAddCard = styled.form`
   flex-direction: column;
   width:100%;
   align-items:center;
-
 
   .container{
     display: flex;
@@ -75,6 +76,9 @@ const SRAddCard = styled.form`
 `;
 
 const AddRecipe = (props) => {
+
+  const { recipes, setRecipes } = useContext(RecipesContext);
+
   const [isDisabled, setIsDisabled] = useState(true)
 
   const setFormErrors = (name, value) =>{
@@ -98,8 +102,6 @@ const AddRecipe = (props) => {
     ingredients: [],
   });
 
-  const { push } = useHistory();
-
   const onCancel = (evt) => {
     evt.preventDefault();
     setRecipe({name: '',
@@ -116,6 +118,23 @@ const AddRecipe = (props) => {
       ...recipe,
       [name]: value,
     });
+  };
+
+  //Splits the ingredients by ',' character and pushes each of them
+  const checkForTrailing = (string) => {
+    let stringArray = [];
+    let newString = '';
+    if (typeof string === 'object') {
+      newString = string.toString();
+    } else {
+      newString = string;
+    }
+    if (newString.charAt(newString.length - 1) === ',') {
+      stringArray = newString.replace(/,+$/, '').split(',');
+    } else {
+      stringArray = newString.split(',');
+    }
+    return stringArray;
   };
 
   useEffect(() =>{
@@ -139,19 +158,21 @@ const AddRecipe = (props) => {
     axiosWithAuth()
       .post('/recipes/new', newRecipe)
       .then((res) => {
-        push('/recipes/all');
+        console.log(res.data);
+        setRecipes([...recipes, res.data]);
       })
       .catch((err) => {
         console.log('Post new recipes Error:', err);
       });
 
-      setRecipe({
-        name: '',
-        source: '',
-        instructions: '',
-        category: '',
-        ingredients: [],
-      })
+    setRecipe({
+      name: '',
+      source: '',
+      instructions: '',
+      category: '',
+      ingredients: [],
+    });
+
   };
 
   return (
