@@ -116,7 +116,7 @@ const RecipeCard = (props) => {
                 Delete Recipe
               </div>
               <div className='edit-button' onClick={editHandler}>
-                {editable ? 'Save Recipe' : 'Edit Recipe'}
+                {editable ? 'Cancel' : 'Edit Recipe'}
               </div>
             </StyledCard>
           ))}
