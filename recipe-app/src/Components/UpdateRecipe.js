@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import * as yup from 'yup';
+import styled from 'styled-components'
 
 import updateSchema from '../validation/updateRecSchema';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
+const StyledErrors = styled.p`
+color: red;
+font-weight: bold;
+margin: 0;
+font-size: .9rem;
+`
 
 const initialRecipe = {
   name: '',
@@ -29,6 +36,17 @@ const UpdateRecipe = (props) => {
   const { id } = useParams();
   const { push } = useHistory();
 
+  const checkForTrailing = (string) => {
+    let stringArray = [];
+    if (string.charAt(string.length-1) === ',') {
+      stringArray = string.replace(/,+$/,"").split(',')
+    }
+    else {
+      stringArray = string.split(',')
+    }
+    return stringArray
+  }
+
   const changeHandler = (e) => {
     const { name, value } = e.target;
     yup.reach(updateSchema, name)
@@ -42,7 +60,7 @@ const UpdateRecipe = (props) => {
     .catch( err => {
       setErrorMessages({
         ...errorMessages,
-        [name]: err.errors[0],
+        [name]: `- ${err.errors[0]}`,
       })
     })
 
@@ -70,7 +88,8 @@ const UpdateRecipe = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newArr = [];
-    recipe.ingredients.replace(/,+$/,"").split(',').forEach((ingr) => {
+    console.log(recipe.ingredients)
+    checkForTrailing(recipe.ingredients).forEach((ingr) => {
       newArr.push(ingr);
     });
     const updatedRecipe = {
@@ -148,10 +167,10 @@ const UpdateRecipe = (props) => {
         />
       </label>
       <button>Submit Changes</button>
-      <p>{errorMessages.name}</p>
-      <p>{errorMessages.instructions}</p>
-      <p>{errorMessages.category}</p>
-      <p>{errorMessages.ingredients}</p>
+      <StyledErrors>{errorMessages.name}</StyledErrors>
+      <StyledErrors>{errorMessages.instructions}</StyledErrors>
+      <StyledErrors>{errorMessages.category}</StyledErrors>
+      <StyledErrors>{errorMessages.ingredients}</StyledErrors>
     </form>
   );
 };

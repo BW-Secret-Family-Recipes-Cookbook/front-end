@@ -20,7 +20,7 @@ const StyledCard = styled.div`
   margin: 2rem;
   padding: 2rem;
   border-radius: 1.3rem;
-  max-width: 300px;
+  max-width: 290px;
   :hover {
     border: solid 7px #49bf9d;
     transition: border-color 0.2s ease-in-out;
