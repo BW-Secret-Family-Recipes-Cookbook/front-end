@@ -13,6 +13,7 @@ const CardContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+
 `;
 const StyledCard = styled.div`
   color: #525252;
@@ -21,14 +22,36 @@ const StyledCard = styled.div`
   padding: 2rem;
   border-radius: 1.3rem;
   max-width: 300px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
   :hover {
     border: solid 7px #49bf9d;
     transition: border-color 0.2s ease-in-out;
   }
   h3 {
     font-size: 1.5rem;
+    margin: 0;
   }
   h5 {
+    margin: .8rem 0;
+  }
+  .btn {
+    font-size: .9rem;
+    padding: .15rem .4rem;
+    margin: .25rem 0;
+    border: none;
+    border-radius: 4px;
+    background: rgb(239, 239, 239);
+    white-space: nowrap;
+    :hover {
+      background: #49bf9d;
+      color: white;
+      transition: background-color 0.2s ease-in-out, color 1 ease-in-out;
+    }
+  }
+  .delete-button {
+    margin-top: 0;
   }
 `;
 
@@ -108,14 +131,14 @@ const RecipeCard = (props) => {
               )}
 
               <div
-                className='delete-button'
+                className='delete-button btn'
                 onClick={() => {
                   deleteHandler(recipe);
                 }}
               >
                 Delete Recipe
               </div>
-              <div className='edit-button' onClick={editHandler}>
+              <div className='edit-button btn' onClick={editHandler}>
                 {editable ? 'Cancel' : 'Edit Recipe'}
               </div>
             </StyledCard>
