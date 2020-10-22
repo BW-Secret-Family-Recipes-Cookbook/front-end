@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+
 import { RecipesContext } from '../contexts/RecipesContext';
+
 import styled from 'styled-components';
 
 import * as yup from 'yup'
@@ -20,7 +22,6 @@ const SRAddCard = styled.form`
   flex-direction: column;
   width:100%;
   align-items:center;
-
 
   .container{
     display: flex;
@@ -77,7 +78,7 @@ const SRAddCard = styled.form`
 const AddRecipe = (props) => {
 
   const { recipes, setRecipes } = useContext(RecipesContext);
-  
+
   const [isDisabled, setIsDisabled] = useState(true)
 
   const setFormErrors = (name, value) =>{
@@ -100,7 +101,6 @@ const AddRecipe = (props) => {
     category: '',
     ingredients: [],
   });
-
 
   const onCancel = (evt) => {
     evt.preventDefault();
@@ -146,11 +146,10 @@ const AddRecipe = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const newArr = [];
-
-    checkForTrailing(recipe.ingredients).forEach((ingr) => {
+    //Splits the ingredients by ',' character and pushes each of them
+    recipe.ingredients.replace(/,+$/,"").split(',').forEach((ingr) => {
       newArr.push(ingr);
     });
-
     const newRecipe = {
       ...recipe,
       ingredients: newArr,
@@ -173,6 +172,7 @@ const AddRecipe = (props) => {
       category: '',
       ingredients: [],
     });
+
   };
 
   return (

@@ -12,7 +12,7 @@ flex-flow: row wrap;
 justify-content: space-between;
 align-items: center;
 width: 85%;
-margin: 0 auto;
+margin: 0 auto 1.5rem auto;
 box-shadow: 0 10px 10px -15px black;
 svg {
     width: 50px;
