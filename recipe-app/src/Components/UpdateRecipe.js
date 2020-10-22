@@ -1,10 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import * as yup from 'yup';
+import styled from 'styled-components'
 
 import updateSchema from '../validation/updateRecSchema';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
+const StyledForm = styled.form`
+display: flex;
+flex-flow: column nowrap;
+label {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+input {
+  margin-left: 2rem;
+}
+button {
+  margin: 1rem 0;
+  color: white;
+  background: #49bf9d;
+  margin-top: 25px;
+  border: none;
+  border-radius: .25rem;
+  padding: .4rem;
+  :hover {
+    background: #50d4ae;
+    transition: background-color 0.2s ease-in-out;
+  }
+}
+
+`;
+
+const StyledErrors = styled.p`
+color: red;
+font-weight: bold;
+margin: 0;
+font-size: .9rem;
+`;
 
 const initialRecipe = {
   name: '',
@@ -29,6 +63,24 @@ const UpdateRecipe = (props) => {
   const { id } = useParams();
   const { push } = useHistory();
 
+  const checkForTrailing = (string) => {
+    let stringArray = [];
+    let newString = ''
+    if (typeof(string) === "object") {
+      newString = string.toString()
+    }
+    else {
+      newString = string
+    }
+    if (newString.charAt(newString.length-1) === ',') {
+      stringArray = newString.replace(/,+$/,"").split(',')
+    }
+    else {
+      stringArray = newString.split(',')
+    }
+    return stringArray
+  }
+
   const changeHandler = (e) => {
     const { name, value } = e.target;
     yup.reach(updateSchema, name)
@@ -42,7 +94,7 @@ const UpdateRecipe = (props) => {
     .catch( err => {
       setErrorMessages({
         ...errorMessages,
-        [name]: err.errors[0],
+        [name]: `- ${err.errors[0]}`,
       })
     })
 
@@ -70,7 +122,8 @@ const UpdateRecipe = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newArr = [];
-    recipe.ingredients.replace(/,+$/,"").split(',').forEach((ingr) => {
+    // console.log(recipe.ingredients)
+    checkForTrailing(recipe.ingredients).forEach((ingr) => {
       newArr.push(ingr);
     });
     const updatedRecipe = {
@@ -89,7 +142,7 @@ const UpdateRecipe = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <StyledForm onSubmit={handleSubmit}>
       <h2>Recipe Editor</h2>
 
       <label>
@@ -147,12 +200,14 @@ const UpdateRecipe = (props) => {
           placeholder='Enter Ingredient'
         />
       </label>
-      <button>Submit Changes</button>
-      <p>{errorMessages.name}</p>
-      <p>{errorMessages.instructions}</p>
-      <p>{errorMessages.category}</p>
-      <p>{errorMessages.ingredients}</p>
-    </form>
+      <div>
+        <button>Submit Changes</button>
+      </div>
+      <StyledErrors>{errorMessages.name}</StyledErrors>
+      <StyledErrors>{errorMessages.instructions}</StyledErrors>
+      <StyledErrors>{errorMessages.category}</StyledErrors>
+      <StyledErrors>{errorMessages.ingredients}</StyledErrors>
+    </StyledForm>
   );
 };
 
