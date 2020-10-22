@@ -67,17 +67,14 @@ const SRAddCard = styled.form`
   .cancelBtn:hover {
     background: #e3e3e3;
   }
+
+  .errors{
+    color:red;
+  }
+
 `;
 
 const AddRecipe = (props) => {
-  //States and variables
-  const {
-    values,
-    setValues,
-    reset,
-    // submitHandlers: { postIngredient, putIngredient },
-  } = props;
-
   const [isDisabled, setIsDisabled] = useState(true)
 
   const setFormErrors = (name, value) =>{
@@ -105,7 +102,11 @@ const AddRecipe = (props) => {
 
   const onCancel = (evt) => {
     evt.preventDefault();
-    reset();
+    setRecipe({name: '',
+    source: '',
+    instructions: '',
+    category: '',
+    ingredients: [],})
   };
 
   const changeHandler = (evt) => {
@@ -118,9 +119,11 @@ const AddRecipe = (props) => {
   };
 
   useEffect(() =>{
-    schema.isValid(recipe).then(valid => setIsDisabled(!valid))
+    schema.isValid(recipe).then(valid => setIsDisabled(!valid)
+    )
+
     }, [recipe])
-    
+
   const onSubmit = (e) => {
     e.preventDefault();
     const newArr = [];
