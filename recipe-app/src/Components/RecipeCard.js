@@ -19,7 +19,8 @@ const StyledCard = styled.div`
   margin: 2rem;
   padding: 2rem;
   border-radius: 1.3rem;
-  max-width: 300px;
+  max-width: 290px;
+  min-width: 250px;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -27,18 +28,31 @@ const StyledCard = styled.div`
     border: solid 7px #49bf9d;
     transition: border-color 0.2s ease-in-out;
   }
+  div {
+    width: 100%;
+  }
   h3 {
     font-size: 1.5rem;
-    margin: 0;
+    margin: 0 auto;
   }
   h5 {
-    margin: 0.8rem 0;
+    margin: 0.8rem;
+    font-weight: 500;
+    text-align: left;
+    p {
+      margin: 0;
+      font-weight: 700;
+    }
+  }
+  h5:nth-of-type(1) {
+    margin: 0.8rem auto 0.2rem auto;
+    text-align: center;
   }
   .btn {
     color: #525252;
     font-size: 0.9rem;
     padding: 0.3rem 0.4rem;
-    margin: 0.25rem 0;
+    margin: 0.25rem 0 0 0;
     border: none;
     border-radius: 4px;
     background: rgb(239, 239, 239);
@@ -51,7 +65,7 @@ const StyledCard = styled.div`
     }
   }
   .delete-button {
-    margin-top: 0;
+    margin-top: 1rem;
   }
 `;
 
@@ -117,13 +131,13 @@ const RecipeCard = (props) => {
         : recipes.map((recipe, idx) => (
             <StyledCard key={idx} className='current-recipes'>
               {recipe.recipeid != editable ? (
-                <>
-                  <h3>{`Recipe Name: ${recipe.name}`}</h3>
-                  <h5>{`Recipe Source: ${recipe.source}`}</h5>
-                  <h5>{`Instructions: ${recipe.instructions}`}</h5>
-                  <h5>{`Category: ${recipe.category}`}</h5>
-                  <h5>{`Ingredients: ${recipe.ingredients.join(', ')}`}</h5>
-                </>
+                <div>
+                  <h3>{`${recipe.name}`}</h3>
+                  <h5><p>Recipe Source:</p>{`${recipe.source}`}</h5>
+                  <h5><p>Instructions:</p>{`${recipe.instructions}`}</h5>
+                  <h5><p>Category:</p>{`${recipe.category}`}</h5>
+                  <h5><p>Ingredients:</p>{`${recipe.ingredients.join(', ')}`}</h5>
+                </div>
               ) : (
                 <>
                   <UpdateRecipe recipe={recipe} editHandler={editHandler} />
