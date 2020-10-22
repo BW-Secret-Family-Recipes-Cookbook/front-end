@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
-import { axiosWithAuth } from '../utils/axiosWithAuth';
 import styled from 'styled-components';
-import loginSchema from '../validation/loginSchema'
+import loginSchema from '../validation/loginSchema';
 
 // Style for Login
 const StyledForm = styled.form`
@@ -47,9 +46,9 @@ const StyledForm = styled.form`
 `;
 
 const StyledErrors = styled.div`
-color: red;
-font-weight: bolder;
-`
+  color: red;
+  font-weight: bolder;
+`;
 const initialLoginValues = {
   username: '',
   password: '',
@@ -58,7 +57,7 @@ const initialLoginErrors = {
   username: '',
   passwordk: '',
   invalid: '',
-}
+};
 
 const initialDisabled = true;
 
@@ -90,23 +89,24 @@ const Login = () => {
     )
       .then((res) => {
         window.localStorage.setItem('token', res.data.access_token);
-        setLoginErrors({...loginErrors, invalid:''});
+        setLoginErrors({ ...loginErrors, invalid: '' });
         push('/recipes/all');
       })
       .catch((err) => {
         setLoginErrors({
-          ...loginErrors, 
-          invalid: JSON.parse(err.request.response).error_description});
-        setCredentials({...credentials, password: ''})
+          ...loginErrors,
+          invalid: JSON.parse(err.request.response).error_description,
+        });
+        setCredentials({ ...credentials, password: '' });
         console.log('Login Post Error:', err);
       });
   };
 
   useEffect(() => {
-    loginSchema.isValid(credentials).then(valid =>{
-      setDisabled(!valid)
-    })
-  },[credentials])
+    loginSchema.isValid(credentials).then((valid) => {
+      setDisabled(!valid);
+    });
+  }, [credentials]);
 
   return (
     <div className='login-form'>

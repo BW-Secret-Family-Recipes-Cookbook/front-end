@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 
@@ -58,11 +57,6 @@ const StyledCard = styled.div`
 
 const RecipeCard = (props) => {
   const { recipes, setRecipes } = useContext(RecipesContext);
-
-  const { id } = useParams();
-  const { push } = useHistory();
-
-  // TODO Remove State Handler for Editing / Disabled state
   const [editable, setEditable] = useState(false);
 
   const renderLoader = () => {
@@ -84,14 +78,11 @@ const RecipeCard = (props) => {
       .get('/recipes/all')
       .then((res) => {
         setRecipes([...res.data]);
-        // console.log(recipes)
-        // console.log(res.data);
       });
   };
 
   useEffect(() => {
     getRecipes();
-    // console.log('test');
   }, []);
 
   const deleteHandler = (recipe) => {
@@ -121,7 +112,6 @@ const RecipeCard = (props) => {
 
   return (
     <CardContainer className='user-recipes'>
-      <div>{/* <AddRecipe /> */}</div>
       {props.isLoading
         ? renderLoader()
         : recipes.map((recipe, idx) => (

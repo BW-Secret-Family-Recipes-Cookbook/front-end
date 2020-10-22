@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import styled from 'styled-components';
 
@@ -41,14 +40,6 @@ const StyledErrors = styled.p`
   font-size: 0.9rem;
 `;
 
-const initialRecipe = {
-  name: '',
-  source: '',
-  instructions: '',
-  category: '',
-  ingredients: [],
-};
-
 const initialErrors = {
   name: '',
   source: '',
@@ -59,11 +50,8 @@ const initialErrors = {
 
 const UpdateRecipe = (props) => {
   const { recipes, setRecipes } = useContext(RecipesContext);
-  // console.log({ recipe: props.recipe });
   const [recipe, setRecipe] = useState(props.recipe);
   const [errorMessages, setErrorMessages] = useState(initialErrors);
-  const { recipeid } = useParams();
-  const { push } = useHistory();
 
   const checkForTrailing = (string) => {
     let stringArray = [];
@@ -105,26 +93,12 @@ const UpdateRecipe = (props) => {
     });
   };
 
-  // useEffect(() => {
-  //   axiosWithAuth()
-  //     .get(`/recipes/${recipe.recipeid}`)
-  //     .then((res) => {
-  //       setRecipe(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log('Error:', err);
-  //     });
-  // }, [recipeid]);
-
-  useEffect(() => {
-    // console.log({ recipe });
-  }, [recipe]);
+  useEffect(() => {}, [recipe]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newArr = [];
 
-    // console.log(recipe.ingredients)
     checkForTrailing(recipe.ingredients).forEach((ingr) => {
       newArr.push(ingr);
     });
@@ -141,7 +115,6 @@ const UpdateRecipe = (props) => {
         setRecipes(
           recipes.map((recipe) => {
             if (updatedRecipe.recipeid === recipe.recipeid) {
-              // console.log('found it');
               return updatedRecipe;
             } else {
               return recipe;
@@ -149,7 +122,6 @@ const UpdateRecipe = (props) => {
           })
         );
         props.editHandler();
-        // console.log(recipes);
       })
       .catch((err) => {
         console.log('Put Error:', err);
