@@ -51,7 +51,7 @@ const RecipeCard = (props) => {
     axiosWithAuth()
       .get('/recipes/all')
       .then((res) => {
-        setRecipes([...recipes.concat(res.data)]);
+        setRecipes([...res.data]);
         // console.log(recipes)
         // console.log(res.data);
       });
