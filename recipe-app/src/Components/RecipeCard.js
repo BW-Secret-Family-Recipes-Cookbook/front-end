@@ -75,7 +75,15 @@ const RecipeCard = (props) => {
     axiosWithAuth()
       .delete(`/recipes/${recipe.recipeid}`)
       .then(() => {
-        push('/recipes/all');
+        setRecipes(
+          recipes.filter((rec) => {
+            if (recipe.recipeid === rec.recipeid) {
+              return false;
+            } else {
+              return true;
+            }
+          })
+        );
       })
       .catch((err) => {
         console.log('Delete Error:', err);
@@ -103,7 +111,7 @@ const RecipeCard = (props) => {
                 </>
               ) : (
                 <>
-                  <UpdateRecipe recipe={recipe} />
+                  <UpdateRecipe recipe={recipe} editHandler={editHandler} />
                 </>
               )}
 
