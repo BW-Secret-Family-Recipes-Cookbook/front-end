@@ -86,7 +86,7 @@ const AddRecipe = (props) => {
     e.preventDefault();
     const newArr = [];
     //Splits the ingredients by ',' character and pushes each of them
-    recipe.ingredients.split(',').forEach((ingr) => {
+    recipe.ingredients.replace(/,+$/,"").split(',').forEach((ingr) => {
       newArr.push(ingr);
     });
     const newRecipe = {
