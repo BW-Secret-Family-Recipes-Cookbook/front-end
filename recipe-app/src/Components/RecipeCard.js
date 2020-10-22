@@ -1,37 +1,40 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 import { RecipesContext } from '../contexts/RecipesContext';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 // import AddRecipe from './AddRecipe';
 const CardContainer = styled.div`
-display: flex;
-flex-flow: row wrap;
-justify-content: center;
-`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+`;
 const StyledCard = styled.div`
-color: #525252;
-border: solid 7px #efefef;
-margin: 2rem;
-padding: 2rem;
-border-radius: 1.3rem;
-max-width: 300px;
+  color: #525252;
+  border: solid 7px #efefef;
+  margin: 2rem;
+  padding: 2rem;
+  border-radius: 1.3rem;
+  max-width: 300px;
   :hover {
     border: solid 7px #49bf9d;
     transition: border-color 0.2s ease-in-out;
-}
-h3 {
-  font-size: 1.5rem;
-}
-h5 {
-  
-}
-`
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  h5 {
+  }
+`;
 
 const RecipeCard = (props) => {
   const { recipes, setRecipes } = useContext(RecipesContext);
+
+  const { id } = useParams();
+  const { push } = useHistory();
 
   const renderLoader = () => {
     return (
@@ -62,6 +65,17 @@ const RecipeCard = (props) => {
     console.log('test');
   }, []);
 
+  const deleteHandler = () => {
+    axiosWithAuth()
+      .delete(`/recipes/${recipe.id}`)
+      .then(() => {
+        push('/');
+      })
+      .catch((err) => {
+        console.log('Delete Error:', err);
+      });
+  };
+
   return (
     <CardContainer className='user-recipes'>
       <div>{/* <AddRecipe /> */}</div>
@@ -74,14 +88,14 @@ const RecipeCard = (props) => {
               <h5>{`Instructions: ${recipe.instructions}`}</h5>
               <h5>{`Category: ${recipe.category}`}</h5>
               <h5>{`Ingredients: ${recipe.ingredients.join(', ')}`}</h5>
+              <div className='delete-button' onClick={deleteHandler}>
+                Delete Recipe
+              </div>
+              {/* <div className='edit-button' onClick={editHandler}>
+                Edit Recipe
+              </div> */}
             </StyledCard>
           ))}
-      {/* <div className='edit-button' onClick={editHandler}>
-        Edit Recipe
-      </div>
-      <div className='delete-button' onClick={deleteHandler}>
-        Delete Recipe
-      </div> */}
     </CardContainer>
   );
 };
