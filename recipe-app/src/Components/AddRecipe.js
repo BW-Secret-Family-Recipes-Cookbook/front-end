@@ -1,18 +1,28 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
-
 import { RecipesContext } from '../contexts/RecipesContext';
-import { RVContext } from '../contexts/RVcontext';
 import styled from 'styled-components';
+
+import * as yup from 'yup'
+
+
+const schema = yup.object().shape({
+  name: yup.string().required('Recipe name is required.'),
+  source: yup.string().required('Source is required.'),
+  ingredients: yup.string().required('Ingredients are required.'),
+  category: yup.string().required('Category is required.'),
+  instructions: yup.string().required('Instructions are required.')
+})
+
 
 const SRAddCard = styled.form`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  align-items: center;
+  width:100%;
+  align-items:center;
 
-  .container {
+
+  .container{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,7 +32,7 @@ const SRAddCard = styled.form`
     margin: 10px;
   }
 
-  .container:hover {
+  .container:hover{
     border: solid 7px #49bf9d;
     transition: border-color 0.2s ease-in-out;
   }
@@ -57,19 +67,25 @@ const SRAddCard = styled.form`
   .cancelBtn:hover {
     background: #e3e3e3;
   }
+
+  .errors{
+    color:red;
+  }
+
 `;
 
 const AddRecipe = (props) => {
-  //States and variables
-  const {
-    values,
-    setValues,
-    reset,
-    // submitHandlers: { postIngredient, putIngredient },
-  } = props;
 
   const { recipes, setRecipes } = useContext(RecipesContext);
-  const { recipeValues, setRecipeValues } = useContext(RVContext);
+  
+  const [isDisabled, setIsDisabled] = useState(true)
+
+  const setFormErrors = (name, value) =>{
+    yup.reach(schema, name).validate(value)
+      .then(()=>setErrors({...errors, [name]:''}))
+      .catch(err=>setErrors({...errors, [name]: err.errors[0]}))
+  }
+
   const [recipe, setRecipe] = useState({
     name: '',
     source: '',
@@ -77,40 +93,55 @@ const AddRecipe = (props) => {
     category: '',
     ingredients: [],
   });
+  const [errors, setErrors] = useState({
+    name: '',
+    source: '',
+    instructions: '',
+    category: '',
+    ingredients: [],
+  });
 
-  const { push } = useHistory();
-
-  //Splits the ingredients by ',' character and pushes each of them
-  const checkForTrailing = (string) => {
-    let stringArray = [];
-    let newString = ''
-    if (typeof(string) === "object") {
-      newString = string.toString()
-    }
-    else {
-      newString = string
-    }
-    if (newString.charAt(newString.length-1) === ',') {
-      stringArray = newString.replace(/,+$/,"").split(',')
-    }
-    else {
-      stringArray = newString.split(',')
-    }
-    return stringArray
-  }
 
   const onCancel = (evt) => {
     evt.preventDefault();
-    reset();
+    setRecipe({name: '',
+    source: '',
+    instructions: '',
+    category: '',
+    ingredients: [],})
   };
 
   const changeHandler = (evt) => {
     const { name, value } = evt.target;
+    setFormErrors(name, value)
     setRecipe({
       ...recipe,
       [name]: value,
     });
   };
+
+  //Splits the ingredients by ',' character and pushes each of them
+  const checkForTrailing = (string) => {
+    let stringArray = [];
+    let newString = '';
+    if (typeof string === 'object') {
+      newString = string.toString();
+    } else {
+      newString = string;
+    }
+    if (newString.charAt(newString.length - 1) === ',') {
+      stringArray = newString.replace(/,+$/, '').split(',');
+    } else {
+      stringArray = newString.split(',');
+    }
+    return stringArray;
+  };
+
+  useEffect(() =>{
+    schema.isValid(recipe).then(valid => setIsDisabled(!valid)
+    )
+
+    }, [recipe])
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -130,7 +161,6 @@ const AddRecipe = (props) => {
       .then((res) => {
         console.log(res.data);
         setRecipes([...recipes, res.data]);
-        // push('/recipes/all');
       })
       .catch((err) => {
         console.log('Post new recipes Error:', err);
@@ -145,62 +175,64 @@ const AddRecipe = (props) => {
     });
   };
 
-  const isDisabled = () => {
-    return !values.text.trim() || !values.recipes.trim();
-  };
-
   return (
     <SRAddCard onSubmit={onSubmit}>
       <div className='container'>
-        <h2>Add New Recipe</h2>
+      <h2>Add New Recipe</h2>
+      <div className='errors'>
+        <div>{errors.name}</div>
+        <div>{errors.source}</div>
+        <div>{errors.instructions}</div>
+        <div>{errors.category}</div>
+        <div>{errors.ingredients}</div>
+      </div>
+      <input
+        name='name'
+        type='text'
+        value={recipe.name}
+        onChange={changeHandler}
+        placeholder='Enter Recipe Name'
+      />
 
-        <input
-          name='name'
-          type='text'
-          value={recipe.name}
-          onChange={changeHandler}
-          placeholder='Enter Recipe Name'
-        />
+      <input
+        name='source'
+        type='text'
+        value={recipe.source}
+        onChange={changeHandler}
+        placeholder='Enter Source'
+      />
 
-        <input
-          name='source'
-          type='text'
-          value={recipe.source}
-          onChange={changeHandler}
-          placeholder='Enter Source'
-        />
+      <input
+        name='instructions'
+        type='text'
+        value={recipe.instructions}
+        onChange={changeHandler}
+        placeholder='Enter Instructions'
+      />
 
-        <input
-          name='instructions'
-          type='text'
-          value={recipe.instructions}
-          onChange={changeHandler}
-          placeholder='Enter Instructions'
-        />
+      <input
+        name='category'
+        type='text'
+        value={recipe.category}
+        onChange={changeHandler}
+        placeholder='Enter Category'
+      />
+      {/* ^^^^^should change to selector??? */}
 
-        <input
-          name='category'
-          type='text'
-          value={recipe.category}
-          onChange={changeHandler}
-          placeholder='Enter Category'
-        />
-        {/* ^^^^^should change to selector??? */}
+      <input
+        name='ingredients'
+        type='text'
+        value={recipe.ingredients}
+        onChange={changeHandler}
+        placeholder='Enter Ingredient'
+      />
 
-        <input
-          name='ingredients'
-          type='text'
-          value={recipe.ingredients}
-          onChange={changeHandler}
-          placeholder='Enter Ingredient'
-        />
-
-        <button className='submitBtn' disabled={isDisabled}>
-          Submit
-        </button>
-        <button className='cancelBtn' onClick={onCancel}>
-          Cancel
-        </button>
+      <button className='submitBtn' disabled={isDisabled}>
+        Submit
+      </button>
+      <button className='cancelBtn' onClick={onCancel}>
+        Cancel
+      </button>
       </div>
     </SRAddCard>
   );
