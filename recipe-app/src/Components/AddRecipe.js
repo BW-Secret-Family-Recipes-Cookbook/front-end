@@ -80,6 +80,25 @@ const AddRecipe = (props) => {
 
   const { push } = useHistory();
 
+  //Splits the ingredients by ',' character and pushes each of them
+  const checkForTrailing = (string) => {
+    let stringArray = [];
+    let newString = ''
+    if (typeof(string) === "object") {
+      newString = string.toString()
+    }
+    else {
+      newString = string
+    }
+    if (newString.charAt(newString.length-1) === ',') {
+      stringArray = newString.replace(/,+$/,"").split(',')
+    }
+    else {
+      stringArray = newString.split(',')
+    }
+    return stringArray
+  }
+
   const onCancel = (evt) => {
     evt.preventDefault();
     reset();
@@ -96,13 +115,11 @@ const AddRecipe = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const newArr = [];
-    //Splits the ingredients by ',' character and pushes each of them
-    recipe.ingredients
-      .replace(/,+$/, '')
-      .split(',')
-      .forEach((ingr) => {
-        newArr.push(ingr);
-      });
+
+    checkForTrailing(recipe.ingredients).forEach((ingr) => {
+      newArr.push(ingr);
+    });
+
     const newRecipe = {
       ...recipe,
       ingredients: newArr,
