@@ -1,9 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 import { RecipesContext } from '../contexts/RecipesContext';
-import { RVContext } from '../contexts/RVcontext';
 import styled from 'styled-components';
 
 const SRAddCard = styled.form`
@@ -69,7 +67,6 @@ const AddRecipe = (props) => {
   } = props;
 
   const { recipes, setRecipes } = useContext(RecipesContext);
-  const { recipeValues, setRecipeValues } = useContext(RVContext);
   const [recipe, setRecipe] = useState({
     name: '',
     source: '',
@@ -78,26 +75,22 @@ const AddRecipe = (props) => {
     ingredients: [],
   });
 
-  const { push } = useHistory();
-
   //Splits the ingredients by ',' character and pushes each of them
   const checkForTrailing = (string) => {
     let stringArray = [];
-    let newString = ''
-    if (typeof(string) === "object") {
-      newString = string.toString()
+    let newString = '';
+    if (typeof string === 'object') {
+      newString = string.toString();
+    } else {
+      newString = string;
     }
-    else {
-      newString = string
+    if (newString.charAt(newString.length - 1) === ',') {
+      stringArray = newString.replace(/,+$/, '').split(',');
+    } else {
+      stringArray = newString.split(',');
     }
-    if (newString.charAt(newString.length-1) === ',') {
-      stringArray = newString.replace(/,+$/,"").split(',')
-    }
-    else {
-      stringArray = newString.split(',')
-    }
-    return stringArray
-  }
+    return stringArray;
+  };
 
   const onCancel = (evt) => {
     evt.preventDefault();
@@ -130,7 +123,6 @@ const AddRecipe = (props) => {
       .then((res) => {
         console.log(res.data);
         setRecipes([...recipes, res.data]);
-        // push('/recipes/all');
       })
       .catch((err) => {
         console.log('Post new recipes Error:', err);

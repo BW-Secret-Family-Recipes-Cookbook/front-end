@@ -1,6 +1,4 @@
-import React, { useContext } from 'react';
-
-// import { RecipesContext } from './contexts/RecipesContext';
+import React from 'react';
 
 import RecipeCard from '../Components/RecipeCard';
 import AddRecipe from '../Components/AddRecipe';
