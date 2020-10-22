@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import { RecipesContext } from '../contexts/RecipesContext';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
+import UpdateRecipe from './UpdateRecipe';
+
 // import AddRecipe from './AddRecipe';
 const CardContainer = styled.div`
   display: flex;
@@ -36,6 +38,9 @@ const RecipeCard = (props) => {
   const { id } = useParams();
   const { push } = useHistory();
 
+  // TODO Remove State Handler for Editing / Disabled state
+  const [editable, setEditable] = useState(false);
+
   const renderLoader = () => {
     return (
       <div>
@@ -65,15 +70,20 @@ const RecipeCard = (props) => {
     console.log('test');
   }, []);
 
-  const deleteHandler = () => {
+  const deleteHandler = (recipe) => {
+    console.log(recipe);
     axiosWithAuth()
-      .delete(`/recipes/${recipe.id}`)
+      .delete(`/recipes/${recipe.recipeid}`)
       .then(() => {
-        push('/');
+        push('/recipes/all');
       })
       .catch((err) => {
         console.log('Delete Error:', err);
       });
+  };
+
+  const editHandler = () => {
+    setEditable(!editable);
   };
 
   return (
@@ -83,17 +93,31 @@ const RecipeCard = (props) => {
         ? renderLoader()
         : recipes.map((recipe, idx) => (
             <StyledCard key={idx} className='current-recipes'>
-              <h3>{`Recipe Name: ${recipe.name}`}</h3>
-              <h5>{`Recipe Source: ${recipe.source}`}</h5>
-              <h5>{`Instructions: ${recipe.instructions}`}</h5>
-              <h5>{`Category: ${recipe.category}`}</h5>
-              <h5>{`Ingredients: ${recipe.ingredients.join(', ')}`}</h5>
-              <div className='delete-button' onClick={deleteHandler}>
+              {!editable ? (
+                <>
+                  <h3>{`Recipe Name: ${recipe.name}`}</h3>
+                  <h5>{`Recipe Source: ${recipe.source}`}</h5>
+                  <h5>{`Instructions: ${recipe.instructions}`}</h5>
+                  <h5>{`Category: ${recipe.category}`}</h5>
+                  <h5>{`Ingredients: ${recipe.ingredients.join(', ')}`}</h5>
+                </>
+              ) : (
+                <>
+                  <UpdateRecipe recipe={recipe} />
+                </>
+              )}
+
+              <div
+                className='delete-button'
+                onClick={() => {
+                  deleteHandler(recipe);
+                }}
+              >
                 Delete Recipe
               </div>
-              {/* <div className='edit-button' onClick={editHandler}>
-                Edit Recipe
-              </div> */}
+              <div className='edit-button' onClick={editHandler}>
+                {editable ? 'Save Recipe' : 'Edit Recipe'}
+              </div>
             </StyledCard>
           ))}
     </CardContainer>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
@@ -58,6 +58,14 @@ const AddRecipe = (props) => {
 
   const { recipes, setRecipes } = useContext(RecipesContext);
   const { recipeValues, setRecipeValues } = useContext(RVContext);
+  const [recipe, setRecipe] = useState({
+    name: '',
+    source: '',
+    instructions: '',
+    category: '',
+    ingredients: [],
+  });
+
   const { push } = useHistory();
 
   const onCancel = (evt) => {
@@ -67,8 +75,8 @@ const AddRecipe = (props) => {
 
   const changeHandler = (evt) => {
     const { name, value } = evt.target;
-    setRecipeValues({
-      ...recipeValues,
+    setRecipe({
+      ...recipe,
       [name]: value,
     });
   };
@@ -77,11 +85,11 @@ const AddRecipe = (props) => {
     e.preventDefault();
     const newArr = [];
     //Splits the ingredients by ',' character and pushes each of them
-    recipeValues.ingredients.split(',').forEach(ingr => {
+    recipe.ingredients.split(',').forEach((ingr) => {
       newArr.push(ingr);
-    })
+    });
     const newRecipe = {
-      ...recipeValues,
+      ...recipe,
       ingredients: newArr,
     };
     console.log(newRecipe);
@@ -106,7 +114,7 @@ const AddRecipe = (props) => {
       <input
         name='name'
         type='text'
-        value={recipeValues.name}
+        value={recipe.name}
         onChange={changeHandler}
         placeholder='Enter Recipe Name'
       />
@@ -114,7 +122,7 @@ const AddRecipe = (props) => {
       <input
         name='source'
         type='text'
-        value={recipeValues.source}
+        value={recipe.source}
         onChange={changeHandler}
         placeholder='Enter Source'
       />
@@ -122,7 +130,7 @@ const AddRecipe = (props) => {
       <input
         name='instructions'
         type='text'
-        value={recipeValues.instructions}
+        value={recipe.instructions}
         onChange={changeHandler}
         placeholder='Enter Instructions'
       />
@@ -130,7 +138,7 @@ const AddRecipe = (props) => {
       <input
         name='category'
         type='text'
-        value={recipeValues.category}
+        value={recipe.category}
         onChange={changeHandler}
         placeholder='Enter Category'
       />
@@ -139,7 +147,7 @@ const AddRecipe = (props) => {
       <input
         name='ingredients'
         type='text'
-        value={recipeValues.ingredients}
+        value={recipe.ingredients}
         onChange={changeHandler}
         placeholder='Enter Ingredient'
       />
