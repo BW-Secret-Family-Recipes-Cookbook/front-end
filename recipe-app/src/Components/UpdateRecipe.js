@@ -136,7 +136,6 @@ const UpdateRecipe = (props) => {
 
   useEffect(() => {
     updateSchema.isValid(recipe).then(valid => {
-      console.log(valid)
       setDisabled(!valid)
     })
   },[recipe])
