@@ -9,11 +9,24 @@ import styled from 'styled-components';
 const SRAddCard = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 400px;
-  box-shadow: 0px 0px 2px;
-  border-radius: 10px;
-  margin: 10px;
+  width:100%;
+  align-items:center;
+
+
+  .container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+    border: solid 7px #efefef;
+    border-radius: 1.3rem;
+    margin: 10px;
+  }
+
+  .container:hover{
+    border: solid 7px #49bf9d;
+    transition: border-color 0.2s ease-in-out;
+  }
 
   input {
     display: flex;
@@ -40,7 +53,7 @@ const SRAddCard = styled.form`
     background: #50d4ae;
   }
   .cancelBtn {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
   .cancelBtn:hover {
     background: #e3e3e3;
@@ -117,7 +130,8 @@ const AddRecipe = (props) => {
 
   return (
     <SRAddCard onSubmit={onSubmit}>
-      <h2>Recipe Card</h2>
+      <div className='container'>
+      <h2>Add New Recipe</h2>
 
       <input
         name='name'
@@ -166,6 +180,7 @@ const AddRecipe = (props) => {
       <button className='cancelBtn' onClick={onCancel}>
         Cancel
       </button>
+      </div>
     </SRAddCard>
   );
 };
