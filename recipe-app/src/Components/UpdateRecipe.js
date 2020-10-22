@@ -11,8 +11,9 @@ const initialRecipe = {
   ingredients: [],
 };
 
-const UpdateRecipe = () => {
-  const [recipe, setRecipe] = useState(initialRecipe);
+const UpdateRecipe = (props) => {
+  console.log({ recipe: props.recipe });
+  const [recipe, setRecipe] = useState(props.recipe);
   const { id } = useParams();
   const { push } = useHistory();
 
@@ -24,21 +25,25 @@ const UpdateRecipe = () => {
     });
   };
 
+  // useEffect(() => {
+  //   axiosWithAuth()
+  //     .get(`/recipes/${recipe.recipeid}`)
+  //     .then((res) => {
+  //       setRecipe(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log('Error:', err);
+  //     });
+  // }, [id]);
+
   useEffect(() => {
-    axiosWithAuth()
-      .get(`/recipes/${id}`)
-      .then((res) => {
-        setRecipe(res.data);
-      })
-      .catch((err) => {
-        console.log('Error:', err);
-      });
-  }, [id]);
+    console.log({ recipe });
+  }, [recipe]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axiosWithAuth()
-      .put(`recipes/${recipe.id}`, recipe)
+      .put(`/recipes/${recipe.recipeid}`, recipe)
       .then((res) => {
         setRecipe(res.data);
         push('/recipes/all');
@@ -52,46 +57,61 @@ const UpdateRecipe = () => {
     <form onSubmit={handleSubmit}>
       <h2>Recipe Editor</h2>
 
-      <input
-        name='recipe'
-        type='text'
-        value={recipe.name}
-        onChange={changeHandler}
-        placeholder='Enter Recipe Name'
-      />
-
-      <input
-        name='source'
-        type='text'
-        value={recipe.source}
-        onChange={changeHandler}
-        placeholder='Enter Source'
-      />
-
-      <input
-        name='instructions'
-        type='text'
-        value={recipe.instructions}
-        onChange={changeHandler}
-        placeholder='Enter Instructions'
-      />
-
-      <input
-        name='category'
-        type='text'
-        value={recipe.category}
-        onChange={changeHandler}
-        placeholder='Enter Category'
-      />
+      <label>
+        Name:
+        <input
+          name='name'
+          type='text'
+          value={recipe?.name}
+          onChange={changeHandler}
+          placeholder='Enter Recipe Name'
+        />
+      </label>
+      <br />
+      <label>
+        Source:
+        <input
+          name='source'
+          type='text'
+          value={recipe?.source}
+          onChange={changeHandler}
+          placeholder='Enter Source'
+        />
+      </label>
+      <br />
+      <label>
+        Instructions:
+        <input
+          name='instructions'
+          type='text'
+          value={recipe?.instructions}
+          onChange={changeHandler}
+          placeholder='Enter Instructions'
+        />
+      </label>
+      <br />
+      <label>
+        Category:
+        <input
+          name='category'
+          type='text'
+          value={recipe?.category}
+          onChange={changeHandler}
+          placeholder='Enter Category'
+        />
+      </label>
       {/* ^^^^^should change to selector??? */}
-
-      <input
-        name='ingredient'
-        type='text'
-        value={recipe.ingredients}
-        onChange={changeHandler}
-        placeholder='Enter Ingredient'
-      />
+      <br />
+      <label>
+        Ingredients:
+        <input
+          name='ingredients'
+          type='text'
+          value={recipe?.ingredients}
+          onChange={changeHandler}
+          placeholder='Enter Ingredient'
+        />
+      </label>
       <button>Submit Changes</button>
     </form>
   );
