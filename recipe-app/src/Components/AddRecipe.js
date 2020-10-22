@@ -9,11 +9,10 @@ import styled from 'styled-components';
 const SRAddCard = styled.form`
   display: flex;
   flex-direction: column;
-  width:100%;
-  align-items:center;
+  width: 100%;
+  align-items: center;
 
-
-  .container{
+  .container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,7 +22,7 @@ const SRAddCard = styled.form`
     margin: 10px;
   }
 
-  .container:hover{
+  .container:hover {
     border: solid 7px #49bf9d;
     transition: border-color 0.2s ease-in-out;
   }
@@ -116,9 +115,11 @@ const AddRecipe = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const newArr = [];
+
     checkForTrailing(recipe.ingredients).forEach((ingr) => {
       newArr.push(ingr);
     });
+
     const newRecipe = {
       ...recipe,
       ingredients: newArr,
@@ -127,19 +128,21 @@ const AddRecipe = (props) => {
     axiosWithAuth()
       .post('/recipes/new', newRecipe)
       .then((res) => {
-        push('/recipes/all');
+        console.log(res.data);
+        setRecipes([...recipes, res.data]);
+        // push('/recipes/all');
       })
       .catch((err) => {
         console.log('Post new recipes Error:', err);
       });
 
-      setRecipe({
-        name: '',
-        source: '',
-        instructions: '',
-        category: '',
-        ingredients: [],
-      })
+    setRecipe({
+      name: '',
+      source: '',
+      instructions: '',
+      category: '',
+      ingredients: [],
+    });
   };
 
   const isDisabled = () => {
@@ -149,55 +152,55 @@ const AddRecipe = (props) => {
   return (
     <SRAddCard onSubmit={onSubmit}>
       <div className='container'>
-      <h2>Add New Recipe</h2>
+        <h2>Add New Recipe</h2>
 
-      <input
-        name='name'
-        type='text'
-        value={recipe.name}
-        onChange={changeHandler}
-        placeholder='Enter Recipe Name'
-      />
+        <input
+          name='name'
+          type='text'
+          value={recipe.name}
+          onChange={changeHandler}
+          placeholder='Enter Recipe Name'
+        />
 
-      <input
-        name='source'
-        type='text'
-        value={recipe.source}
-        onChange={changeHandler}
-        placeholder='Enter Source'
-      />
+        <input
+          name='source'
+          type='text'
+          value={recipe.source}
+          onChange={changeHandler}
+          placeholder='Enter Source'
+        />
 
-      <input
-        name='instructions'
-        type='text'
-        value={recipe.instructions}
-        onChange={changeHandler}
-        placeholder='Enter Instructions'
-      />
+        <input
+          name='instructions'
+          type='text'
+          value={recipe.instructions}
+          onChange={changeHandler}
+          placeholder='Enter Instructions'
+        />
 
-      <input
-        name='category'
-        type='text'
-        value={recipe.category}
-        onChange={changeHandler}
-        placeholder='Enter Category'
-      />
-      {/* ^^^^^should change to selector??? */}
+        <input
+          name='category'
+          type='text'
+          value={recipe.category}
+          onChange={changeHandler}
+          placeholder='Enter Category'
+        />
+        {/* ^^^^^should change to selector??? */}
 
-      <input
-        name='ingredients'
-        type='text'
-        value={recipe.ingredients}
-        onChange={changeHandler}
-        placeholder='Enter Ingredient'
-      />
+        <input
+          name='ingredients'
+          type='text'
+          value={recipe.ingredients}
+          onChange={changeHandler}
+          placeholder='Enter Ingredient'
+        />
 
-      <button className='submitBtn' disabled={isDisabled}>
-        Submit
-      </button>
-      <button className='cancelBtn' onClick={onCancel}>
-        Cancel
-      </button>
+        <button className='submitBtn' disabled={isDisabled}>
+          Submit
+        </button>
+        <button className='cancelBtn' onClick={onCancel}>
+          Cancel
+        </button>
       </div>
     </SRAddCard>
   );
