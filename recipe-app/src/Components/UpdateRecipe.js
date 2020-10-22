@@ -26,9 +26,14 @@ const StyledForm = styled.form`
     border: none;
     border-radius: 0.25rem;
     padding: 0.4rem;
+    outline: none;
     :hover {
       background: #50d4ae;
       transition: background-color 0.2s ease-in-out;
+    }
+    :disabled {
+      pointer-events: none;
+      background-color: #525252;
     }
   }
 `;
@@ -52,6 +57,7 @@ const UpdateRecipe = (props) => {
   const { recipes, setRecipes } = useContext(RecipesContext);
   const [recipe, setRecipe] = useState(props.recipe);
   const [errorMessages, setErrorMessages] = useState(initialErrors);
+  const [disabled, setDisabled] = useState(true)
 
   const checkForTrailing = (string) => {
     let stringArray = [];
@@ -128,6 +134,13 @@ const UpdateRecipe = (props) => {
       });
   };
 
+  useEffect(() => {
+    updateSchema.isValid(recipe).then(valid => {
+      console.log(valid)
+      setDisabled(!valid)
+    })
+  },[recipe])
+
   return (
     <StyledForm onSubmit={handleSubmit}>
       <h2>Recipe Editor</h2>
@@ -188,7 +201,7 @@ const UpdateRecipe = (props) => {
         />
       </label>
       <div>
-        <button>Submit Changes</button>
+        <button disabled={disabled}>Submit Changes</button>
       </div>
       <StyledErrors>{errorMessages.name}</StyledErrors>
       <StyledErrors>{errorMessages.instructions}</StyledErrors>
