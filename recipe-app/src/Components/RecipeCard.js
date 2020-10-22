@@ -37,17 +37,19 @@ const StyledCard = styled.div`
     margin: .8rem 0;
   }
   .btn {
+    color: #525252;
     font-size: .9rem;
-    padding: .15rem .4rem;
+    padding: .3rem .4rem;
     margin: .25rem 0;
     border: none;
     border-radius: 4px;
     background: rgb(239, 239, 239);
     white-space: nowrap;
+    outline: none;
     :hover {
       background: #49bf9d;
       color: white;
-      transition: background-color 0.2s ease-in-out, color 1 ease-in-out;
+      transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
     }
   }
   .delete-button {
@@ -130,17 +132,17 @@ const RecipeCard = (props) => {
                 </>
               )}
 
-              <div
+              <button
                 className='delete-button btn'
                 onClick={() => {
                   deleteHandler(recipe);
                 }}
               >
                 Delete Recipe
-              </div>
-              <div className='edit-button btn' onClick={editHandler}>
+              </button>
+              <button className='edit-button btn' onClick={editHandler}>
                 {editable ? 'Cancel' : 'Edit Recipe'}
-              </div>
+              </button>
             </StyledCard>
           ))}
     </CardContainer>

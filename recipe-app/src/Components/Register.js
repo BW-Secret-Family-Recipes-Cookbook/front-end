@@ -34,7 +34,7 @@ const StyledForm = styled.form`
       background: #49bf9d;
       color: rgb(250, 250, 250);
       transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
-        border-color 0.2s ease-in-out;
+      border-color 0.2s ease-in-out;
     }
     :active {
       border: solid 3px #3ea888;
