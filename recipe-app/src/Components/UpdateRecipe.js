@@ -42,8 +42,16 @@ const UpdateRecipe = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const newArr = [];
+    recipe.ingredients.split(',').forEach((ingr) => {
+      newArr.push(ingr);
+    });
+    const updatedRecipe = {
+      ...recipe,
+      ingredients: newArr,
+    };
     axiosWithAuth()
-      .put(`/recipes/${recipe.recipeid}`, recipe)
+      .put(`/recipes/${recipe.recipeid}`, updatedRecipe)
       .then((res) => {
         setRecipe(res.data);
         push('/recipes/all');
