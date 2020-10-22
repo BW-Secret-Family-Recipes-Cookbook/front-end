@@ -14,14 +14,38 @@ const initialRecipe = {
   ingredients: [],
 };
 
+const initialErrors = {
+  name: '',
+  source: '',
+  instructions: '',
+  category: '',
+  ingredients: [],
+};
+
 const UpdateRecipe = (props) => {
   console.log({ recipe: props.recipe });
   const [recipe, setRecipe] = useState(props.recipe);
+  const [errorMessages, setErrorMessages] = useState(initialErrors);
   const { id } = useParams();
   const { push } = useHistory();
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
+    yup.reach(updateSchema, name)
+    .validate(value)
+    .then(() => {
+      setErrorMessages({
+        ...errorMessages,
+        [name]:'',
+      })
+    })
+    .catch( err => {
+      setErrorMessages({
+        ...errorMessages,
+        [name]: err.errors[0],
+      })
+    })
+
     setRecipe({
       ...recipe,
       [name]: value,
@@ -124,6 +148,10 @@ const UpdateRecipe = (props) => {
         />
       </label>
       <button>Submit Changes</button>
+      <p>{errorMessages.name}</p>
+      <p>{errorMessages.instructions}</p>
+      <p>{errorMessages.category}</p>
+      <p>{errorMessages.ingredients}</p>
     </form>
   );
 };
