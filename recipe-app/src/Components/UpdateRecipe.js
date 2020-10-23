@@ -16,7 +16,7 @@ const StyledForm = styled.form`
     justify-content: space-between;
   }
   input {
-    margin-left: 2rem;
+    margin-left: .5rem;
   }
   button {
     margin: 1rem 0;
@@ -42,7 +42,7 @@ const StyledErrors = styled.p`
   color: red;
   font-weight: bold;
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 `;
 
 const initialErrors = {
@@ -127,6 +127,7 @@ const UpdateRecipe = (props) => {
             }
           })
         );
+        props.setIsFlipped('');
         props.setEditable('');
       })
       .catch((err) => {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
+import Flippy, { FrontSide, BackSide } from 'react-flippy'
 
 import { RecipesContext } from '../contexts/RecipesContext';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
@@ -11,19 +12,39 @@ import UpdateRecipe from './UpdateRecipe';
 const CardContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: space-evenly;
+  .react-flippy {
+    display: flex;
+    width: auto;
+  }
+  .flippy-cardContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    width:auto;
+  }
+  .flippy-card {
+    box-shadow: none;
+    box-sizing: content-box;
+    width: auto;
+    margin:auto;
+    padding:auto;
+  }
 `;
 const StyledCard = styled.div`
   color: #525252;
   border: solid 7px #efefef;
-  margin: 2rem;
-  padding: 2rem;
+  margin: .2rem;
+  margin-bottom: 3rem;
+  padding: 2rem .5rem;
   border-radius: 1.3rem;
-  max-width: 290px;
-  min-width: 250px;
+  width: 22rem;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+
   :hover {
     border: solid 7px #49bf9d;
     transition: border-color 0.2s ease-in-out;
@@ -39,6 +60,7 @@ const StyledCard = styled.div`
     margin: 0.8rem;
     font-weight: 500;
     text-align: left;
+    word-break: break-all;
     p {
       margin: 0;
       font-weight: 700;
@@ -72,6 +94,7 @@ const StyledCard = styled.div`
 const RecipeCard = (props) => {
   const { recipes, setRecipes } = useContext(RecipesContext);
   const [editable, setEditable] = useState(false);
+  const [isFlipped, setIsFlipped] = useState('')
 
   const renderLoader = () => {
     return (
@@ -120,6 +143,7 @@ const RecipeCard = (props) => {
   };
 
   const editHandler = (e) => {
+    setIsFlipped(e.target.name)
     console.log(e.target);
     setEditable(e.target.name);
   };
@@ -129,6 +153,8 @@ const RecipeCard = (props) => {
       {props.isLoading
         ? renderLoader()
         : recipes.map((recipe, idx) => (
+          <Flippy className="react-flippy" key={idx} isFlipped={isFlipped == recipe.recipeid}>
+            <FrontSide>
             <StyledCard key={idx} className='current-recipes'>
               {recipe.recipeid != editable ? (
                 <div>
@@ -156,6 +182,7 @@ const RecipeCard = (props) => {
                     recipe={recipe}
                     editHandler={editHandler}
                     setEditable={setEditable}
+                    setIsFlipped={setIsFlipped}
                     editable={editable}
                   />
                 </>
@@ -177,6 +204,59 @@ const RecipeCard = (props) => {
                 {recipe.recipeid == editable ? 'Cancel' : 'Edit Recipe'}
               </button>
             </StyledCard>
+            </FrontSide>
+            <BackSide>
+            <StyledCard key={idx} className='current-recipes'>
+              {recipe.recipeid != editable ? (
+                <div>
+                  <h3>{`${recipe.name}`}</h3>
+                  <h5>
+                    <p>Recipe Source:</p>
+                    {`${recipe.source}`}
+                  </h5>
+                  <h5>
+                    <p>Instructions:</p>
+                    {`${recipe.instructions}`}
+                  </h5>
+                  <h5>
+                    <p>Category:</p>
+                    {`${recipe.category}`}
+                  </h5>
+                  <h5>
+                    <p>Ingredients:</p>
+                    {`${recipe.ingredients.join(', ')}`}
+                  </h5>
+                </div>
+              ) : (
+                <>
+                  <UpdateRecipe
+                    recipe={recipe}
+                    editHandler={editHandler}
+                    setEditable={setEditable}
+                    setIsFlipped={setIsFlipped}
+                    editable={editable}
+                  />
+                </>
+              )}
+
+              <button
+                className='delete-button btn'
+                onClick={() => {
+                  deleteHandler(recipe);
+                }}
+              >
+                Delete Recipe
+              </button>
+              <button
+                name={recipe.recipeid != editable ? recipe.recipeid : ''}
+                className='edit-button btn'
+                onClick={editHandler}
+              >
+                {recipe.recipeid == editable ? 'Cancel' : 'Edit Recipe'}
+              </button>
+            </StyledCard>
+            </BackSide>
+            </Flippy>
           ))}
     </CardContainer>
   );
