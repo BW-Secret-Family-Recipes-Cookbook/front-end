@@ -12,20 +12,35 @@ import UpdateRecipe from './UpdateRecipe';
 const CardContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: space-evenly;
+  .react-flippy {
+    display: flex;
+    width: auto;
+  }
+  .flippy-cardContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    width:auto;
+  }
   .flippy-card {
     box-shadow: none;
     box-sizing: content-box;
+    width: auto;
+    margin:auto;
+    padding:auto;
   }
 `;
 const StyledCard = styled.div`
   color: #525252;
   border: solid 7px #efefef;
-  margin: 2rem;
-  padding: 2rem;
+  margin: .2rem;
+  margin-bottom: 3rem;
+  padding: 2rem .5rem;
   border-radius: 1.3rem;
-  max-width: 290px;
-  min-width: 250px;
+  width: 22rem;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -79,6 +94,7 @@ const StyledCard = styled.div`
 const RecipeCard = (props) => {
   const { recipes, setRecipes } = useContext(RecipesContext);
   const [editable, setEditable] = useState(false);
+  const [isFlipped, setIsFlipped] = useState('')
 
   const renderLoader = () => {
     return (
@@ -127,6 +143,7 @@ const RecipeCard = (props) => {
   };
 
   const editHandler = (e) => {
+    setIsFlipped(e.target.name)
     console.log(e.target);
     setEditable(e.target.name);
   };
@@ -136,7 +153,7 @@ const RecipeCard = (props) => {
       {props.isLoading
         ? renderLoader()
         : recipes.map((recipe, idx) => (
-          <Flippy key={idx}>
+          <Flippy className="react-flippy" key={idx} isFlipped={isFlipped == recipe.recipeid}>
             <FrontSide>
             <StyledCard key={idx} className='current-recipes'>
               {recipe.recipeid != editable ? (
@@ -165,6 +182,7 @@ const RecipeCard = (props) => {
                     recipe={recipe}
                     editHandler={editHandler}
                     setEditable={setEditable}
+                    setIsFlipped={setIsFlipped}
                     editable={editable}
                   />
                 </>
@@ -215,6 +233,7 @@ const RecipeCard = (props) => {
                     recipe={recipe}
                     editHandler={editHandler}
                     setEditable={setEditable}
+                    setIsFlipped={setIsFlipped}
                     editable={editable}
                   />
                 </>
