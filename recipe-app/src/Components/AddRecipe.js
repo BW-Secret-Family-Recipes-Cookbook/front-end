@@ -5,25 +5,23 @@ import { RecipesContext } from '../contexts/RecipesContext';
 
 import styled from 'styled-components';
 
-import * as yup from 'yup'
-
+import * as yup from 'yup';
 
 const schema = yup.object().shape({
   name: yup.string().required('Recipe name is required.'),
   source: yup.string().required('Source is required.'),
   ingredients: yup.string().required('Ingredients are required.'),
   category: yup.string().required('Category is required.'),
-  instructions: yup.string().required('Instructions are required.')
-})
-
+  instructions: yup.string().required('Instructions are required.'),
+});
 
 const SRAddCard = styled.form`
   display: flex;
   flex-direction: column;
-  width:100%;
-  align-items:center;
+  width: 100%;
+  align-items: center;
 
-  .container{
+  .container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,7 +31,7 @@ const SRAddCard = styled.form`
     margin: 10px;
   }
 
-  .container:hover{
+  .container:hover {
     border: solid 7px #49bf9d;
     transition: border-color 0.2s ease-in-out;
   }
@@ -69,23 +67,23 @@ const SRAddCard = styled.form`
     background: #e3e3e3;
   }
 
-  .errors{
-    color:red;
+  .errors {
+    color: red;
   }
-
 `;
 
 const AddRecipe = (props) => {
-
   const { recipes, setRecipes } = useContext(RecipesContext);
 
-  const [isDisabled, setIsDisabled] = useState(true)
+  const [isDisabled, setIsDisabled] = useState(true);
 
-  const setFormErrors = (name, value) =>{
-    yup.reach(schema, name).validate(value)
-      .then(()=>setErrors({...errors, [name]:''}))
-      .catch(err=>setErrors({...errors, [name]: err.errors[0]}))
-  }
+  const setFormErrors = (name, value) => {
+    yup
+      .reach(schema, name)
+      .validate(value)
+      .then(() => setErrors({ ...errors, [name]: '' }))
+      .catch((err) => setErrors({ ...errors, [name]: err.errors[0] }));
+  };
 
   const [recipe, setRecipe] = useState({
     name: '',
@@ -104,16 +102,18 @@ const AddRecipe = (props) => {
 
   const onCancel = (evt) => {
     evt.preventDefault();
-    setRecipe({name: '',
-    source: '',
-    instructions: '',
-    category: '',
-    ingredients: [],})
+    setRecipe({
+      name: '',
+      source: '',
+      instructions: '',
+      category: '',
+      ingredients: [],
+    });
   };
 
   const changeHandler = (evt) => {
     const { name, value } = evt.target;
-    setFormErrors(name, value)
+    setFormErrors(name, value);
     setRecipe({
       ...recipe,
       [name]: value,
@@ -137,19 +137,20 @@ const AddRecipe = (props) => {
     return stringArray;
   };
 
-  useEffect(() =>{
-    schema.isValid(recipe).then(valid => setIsDisabled(!valid)
-    )
-
-    }, [recipe])
+  useEffect(() => {
+    schema.isValid(recipe).then((valid) => setIsDisabled(!valid));
+  }, [recipe]);
 
   const onSubmit = (e) => {
     e.preventDefault();
     const newArr = [];
     //Splits the ingredients by ',' character and pushes each of them
-    recipe.ingredients.replace(/,+$/,"").split(',').forEach((ingr) => {
-      newArr.push(ingr);
-    });
+    recipe.ingredients
+      .replace(/,+$/, '')
+      .split(',')
+      .forEach((ingr) => {
+        newArr.push(ingr);
+      });
     const newRecipe = {
       ...recipe,
       ingredients: newArr,
@@ -172,67 +173,81 @@ const AddRecipe = (props) => {
       category: '',
       ingredients: [],
     });
-
   };
 
   return (
     <SRAddCard onSubmit={onSubmit}>
       <div className='container'>
-      <h2>Add New Recipe</h2>
-      <div className='errors'>
-        <div>{errors.name}</div>
-        <div>{errors.source}</div>
-        <div>{errors.instructions}</div>
-        <div>{errors.category}</div>
-        <div>{errors.ingredients}</div>
-      </div>
-      <input
-        name='name'
-        type='text'
-        value={recipe.name}
-        onChange={changeHandler}
-        placeholder='Enter Recipe Name'
-      />
+        <h2>Add New Recipe</h2>
+        <div className='errors'>
+          <div>{errors.name}</div>
+          <div>{errors.source}</div>
+          <div>{errors.instructions}</div>
+          <div>{errors.category}</div>
+          <div>{errors.ingredients}</div>
+        </div>
+        <input
+          name='name'
+          type='text'
+          value={recipe.name}
+          onChange={changeHandler}
+          placeholder='Enter Recipe Name'
+        />
 
-      <input
-        name='source'
-        type='text'
-        value={recipe.source}
-        onChange={changeHandler}
-        placeholder='Enter Source'
-      />
+        <input
+          name='source'
+          type='text'
+          value={recipe.source}
+          onChange={changeHandler}
+          placeholder='Enter Source'
+        />
 
-      <input
-        name='instructions'
-        type='text'
-        value={recipe.instructions}
-        onChange={changeHandler}
-        placeholder='Enter Instructions'
-      />
+        <input
+          name='instructions'
+          type='text'
+          value={recipe.instructions}
+          onChange={changeHandler}
+          placeholder='Enter Instructions'
+        />
 
-      <input
+        <select
+          name='category'
+          placeholder='Select Category'
+          value={recipe.category}
+          onChange={changeHandler}
+        >
+          <option value=''>--Select Category--</option>
+          <option value='Breakfast'>Breakfast</option>
+          <option value='Brunch'>Brunch</option>
+          <option value='Lunch'>Lunch</option>
+          <option value='Dinner'>Dinner</option>
+          <option value='Drinks'>Drinks</option>
+          <option value='Dessert'>Dessert</option>
+        </select>
+
+        {/* <input
         name='category'
         type='text'
         value={recipe.category}
         onChange={changeHandler}
         placeholder='Enter Category'
-      />
-      {/* ^^^^^should change to selector??? */}
+      /> */}
+        {/* ^^^^^should change to selector??? */}
 
-      <input
-        name='ingredients'
-        type='text'
-        value={recipe.ingredients}
-        onChange={changeHandler}
-        placeholder='Enter Ingredient'
-      />
+        <input
+          name='ingredients'
+          type='text'
+          value={recipe.ingredients}
+          onChange={changeHandler}
+          placeholder='Enter Ingredient'
+        />
 
-      <button className='submitBtn' disabled={isDisabled}>
-        Submit
-      </button>
-      <button className='cancelBtn' onClick={onCancel}>
-        Cancel
-      </button>
+        <button className='submitBtn' disabled={isDisabled}>
+          Submit
+        </button>
+        <button className='cancelBtn' onClick={onCancel}>
+          Cancel
+        </button>
       </div>
     </SRAddCard>
   );
