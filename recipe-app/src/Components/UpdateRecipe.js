@@ -57,7 +57,7 @@ const UpdateRecipe = (props) => {
   const { recipes, setRecipes } = useContext(RecipesContext);
   const [recipe, setRecipe] = useState(props.recipe);
   const [errorMessages, setErrorMessages] = useState(initialErrors);
-  const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(true);
 
   const checkForTrailing = (string) => {
     let stringArray = [];
@@ -127,7 +127,7 @@ const UpdateRecipe = (props) => {
             }
           })
         );
-        props.editHandler();
+        props.setEditable('');
       })
       .catch((err) => {
         console.log('Put Error:', err);
@@ -135,10 +135,10 @@ const UpdateRecipe = (props) => {
   };
 
   useEffect(() => {
-    updateSchema.isValid(recipe).then(valid => {
-      setDisabled(!valid)
-    })
-  },[recipe])
+    updateSchema.isValid(recipe).then((valid) => {
+      setDisabled(!valid);
+    });
+  }, [recipe]);
 
   return (
     <StyledForm onSubmit={handleSubmit}>
