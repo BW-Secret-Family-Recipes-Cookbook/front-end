@@ -127,7 +127,7 @@ const Login = () => {
         <label>
           Password:
           <input
-            type='text'
+            type='password'
             name='password'
             placeholder='password'
             value={credentials.password}
