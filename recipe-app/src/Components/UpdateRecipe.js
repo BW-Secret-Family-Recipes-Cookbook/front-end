@@ -16,7 +16,7 @@ const StyledForm = styled.form`
     justify-content: space-between;
   }
   input {
-    margin-left: .5rem;
+    margin-left: 0.5rem;
   }
   button {
     margin: 1rem 0;
@@ -180,13 +180,27 @@ const UpdateRecipe = (props) => {
       <br />
       <label>
         Category:
-        <input
+        <select
+          name='category'
+          placeholder='Select Category'
+          value={recipe?.category}
+          onChange={changeHandler}
+        >
+          <option value=''>--Select Category--</option>
+          <option value='Breakfast'>Breakfast</option>
+          <option value='Brunch'>Brunch</option>
+          <option value='Lunch'>Lunch</option>
+          <option value='Dinner'>Dinner</option>
+          <option value='Drinks'>Drinks</option>
+          <option value='Dessert'>Dessert</option>
+        </select>
+        {/* <input
           name='category'
           type='text'
           value={recipe?.category}
           onChange={changeHandler}
           placeholder='Enter Category'
-        />
+        /> */}
       </label>
       {/* ^^^^^should change to selector??? */}
       <br />
