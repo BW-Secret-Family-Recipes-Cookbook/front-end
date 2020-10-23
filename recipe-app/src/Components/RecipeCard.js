@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
+import Flippy, { FrontSide, BackSide } from 'react-flippy'
 
 import { RecipesContext } from '../contexts/RecipesContext';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
@@ -12,6 +13,10 @@ const CardContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
+  .flippy-card {
+    box-shadow: none;
+    box-sizing: content-box;
+  }
 `;
 const StyledCard = styled.div`
   color: #525252;
@@ -24,6 +29,7 @@ const StyledCard = styled.div`
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+
   :hover {
     border: solid 7px #49bf9d;
     transition: border-color 0.2s ease-in-out;
@@ -39,6 +45,7 @@ const StyledCard = styled.div`
     margin: 0.8rem;
     font-weight: 500;
     text-align: left;
+    word-break: break-all;
     p {
       margin: 0;
       font-weight: 700;
@@ -129,6 +136,8 @@ const RecipeCard = (props) => {
       {props.isLoading
         ? renderLoader()
         : recipes.map((recipe, idx) => (
+          <Flippy key={idx}>
+            <FrontSide>
             <StyledCard key={idx} className='current-recipes'>
               {recipe.recipeid != editable ? (
                 <div>
@@ -177,6 +186,58 @@ const RecipeCard = (props) => {
                 {recipe.recipeid == editable ? 'Cancel' : 'Edit Recipe'}
               </button>
             </StyledCard>
+            </FrontSide>
+            <BackSide>
+            <StyledCard key={idx} className='current-recipes'>
+              {recipe.recipeid != editable ? (
+                <div>
+                  <h3>{`${recipe.name}`}</h3>
+                  <h5>
+                    <p>Recipe Source:</p>
+                    {`${recipe.source}`}
+                  </h5>
+                  <h5>
+                    <p>Instructions:</p>
+                    {`${recipe.instructions}`}
+                  </h5>
+                  <h5>
+                    <p>Category:</p>
+                    {`${recipe.category}`}
+                  </h5>
+                  <h5>
+                    <p>Ingredients:</p>
+                    {`${recipe.ingredients.join(', ')}`}
+                  </h5>
+                </div>
+              ) : (
+                <>
+                  <UpdateRecipe
+                    recipe={recipe}
+                    editHandler={editHandler}
+                    setEditable={setEditable}
+                    editable={editable}
+                  />
+                </>
+              )}
+
+              <button
+                className='delete-button btn'
+                onClick={() => {
+                  deleteHandler(recipe);
+                }}
+              >
+                Delete Recipe
+              </button>
+              <button
+                name={recipe.recipeid != editable ? recipe.recipeid : ''}
+                className='edit-button btn'
+                onClick={editHandler}
+              >
+                {recipe.recipeid == editable ? 'Cancel' : 'Edit Recipe'}
+              </button>
+            </StyledCard>
+            </BackSide>
+            </Flippy>
           ))}
     </CardContainer>
   );

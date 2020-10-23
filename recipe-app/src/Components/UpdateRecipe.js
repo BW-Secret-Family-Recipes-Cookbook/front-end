@@ -16,7 +16,7 @@ const StyledForm = styled.form`
     justify-content: space-between;
   }
   input {
-    margin-left: 2rem;
+    margin-left: .5rem;
   }
   button {
     margin: 1rem 0;
