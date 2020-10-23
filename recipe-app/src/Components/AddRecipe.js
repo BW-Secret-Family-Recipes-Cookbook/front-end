@@ -43,6 +43,12 @@ const SRAddCard = styled.form`
     margin: 4px;
   }
 
+  select {
+    width: 73%;
+    padding: 4px;
+    margin: 4px;
+  }
+
   button {
     padding: 4px;
     width: 30%;
