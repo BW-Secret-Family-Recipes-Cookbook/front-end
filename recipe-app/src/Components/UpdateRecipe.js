@@ -15,6 +15,9 @@ const StyledForm = styled.form`
     flex-flow: row nowrap;
     justify-content: space-between;
   }
+  select {
+    width: 11rem;
+  }
   input {
     margin-left: 0.5rem;
   }
