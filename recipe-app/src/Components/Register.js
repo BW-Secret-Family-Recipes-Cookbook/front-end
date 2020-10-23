@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 import styled from 'styled-components';
-import registerSchema from '../validation/registerSchema'
-import * as yup from 'yup'
+import registerSchema from '../validation/registerSchema';
+import * as yup from 'yup';
 
 // Style for Register
 const StyledForm = styled.form`
@@ -34,7 +34,7 @@ const StyledForm = styled.form`
       background: #49bf9d;
       color: rgb(250, 250, 250);
       transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out,
-      border-color 0.2s ease-in-out;
+        border-color 0.2s ease-in-out;
     }
     :active {
       border: solid 3px #3ea888;
@@ -47,9 +47,9 @@ const StyledForm = styled.form`
 `;
 
 const StyledErrors = styled.div`
-color: red;
-font-weight: bolder;
-`
+  color: red;
+  font-weight: bolder;
+`;
 
 // Initial Values
 const initialRegisterValues = {
@@ -62,7 +62,7 @@ const initialCredFormErrors = {
   primaryemail: '',
   username: '',
   password: '',
-}
+};
 
 const initialDisabled = true;
 
@@ -77,20 +77,21 @@ const Register = () => {
     e.persist();
 
     // Validate form values and set errors
-    yup.reach(registerSchema, e.target.name)
-    .validate(e.target.value)
-    .then(() => {
-      setCredFormErrors({
-        ...credFormErrors,
-        [e.target.name]:'',
+    yup
+      .reach(registerSchema, e.target.name)
+      .validate(e.target.value)
+      .then(() => {
+        setCredFormErrors({
+          ...credFormErrors,
+          [e.target.name]: '',
+        });
       })
-    })
-    .catch(err => {
-      setCredFormErrors({
-        ...credFormErrors,
-        [e.target.name]:err.errors[0]
-      })
-    })
+      .catch((err) => {
+        setCredFormErrors({
+          ...credFormErrors,
+          [e.target.name]: err.errors[0],
+        });
+      });
 
     setCredentials({
       ...credentials,
@@ -110,14 +111,13 @@ const Register = () => {
   };
 
   useEffect(() => {
-    registerSchema.isValid(credentials).then(valid => {
-      setDisabled(!valid)
-    })
-  },[credentials])
+    registerSchema.isValid(credentials).then((valid) => {
+      setDisabled(!valid);
+    });
+  }, [credentials]);
 
   return (
     <div className='register-form'>
-
       <StyledForm onSubmit={onSubmit}>
         <label>
           Email:
@@ -142,7 +142,7 @@ const Register = () => {
         <label>
           Password:
           <input
-            type='text'
+            type='password'
             name='password'
             placeholder='password'
             value={credentials.password}
