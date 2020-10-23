@@ -133,14 +133,31 @@ const RecipeCard = (props) => {
               {recipe.recipeid != editable ? (
                 <div>
                   <h3>{`${recipe.name}`}</h3>
-                  <h5><p>Recipe Source:</p>{`${recipe.source}`}</h5>
-                  <h5><p>Instructions:</p>{`${recipe.instructions}`}</h5>
-                  <h5><p>Category:</p>{`${recipe.category}`}</h5>
-                  <h5><p>Ingredients:</p>{`${recipe.ingredients.join(', ')}`}</h5>
+                  <h5>
+                    <p>Recipe Source:</p>
+                    {`${recipe.source}`}
+                  </h5>
+                  <h5>
+                    <p>Instructions:</p>
+                    {`${recipe.instructions}`}
+                  </h5>
+                  <h5>
+                    <p>Category:</p>
+                    {`${recipe.category}`}
+                  </h5>
+                  <h5>
+                    <p>Ingredients:</p>
+                    {`${recipe.ingredients.join(', ')}`}
+                  </h5>
                 </div>
               ) : (
                 <>
-                  <UpdateRecipe recipe={recipe} editHandler={editHandler} />
+                  <UpdateRecipe
+                    recipe={recipe}
+                    editHandler={editHandler}
+                    setEditable={setEditable}
+                    editable={editable}
+                  />
                 </>
               )}
 
